@@ -1,0 +1,15 @@
+
+org/apache/commons
+org/apache/commons/jexl2/parser
+META-INF/maven
+org
+META-INF
+org/apache/commons/jexl2/scripting
+org/apache/commons/jexl2
+org/apache/commons/jexl2/internal/introspection
+org/apache/commons/jexl2/internal
+org/apache
+META-INF/services
+META-INF/maven/org.apache.commons
+org/apache/commons/jexl2/introspection
+META-INF/maven/org.apache.commons/commons-jexl

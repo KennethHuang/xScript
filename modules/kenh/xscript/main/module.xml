@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module xmlns="urn:jboss:module:1.1" name="kenh.xscript">
+
+	<main-class name="kenh.xscript.ScriptUtils"/>
+
+    <resources>
+        <resource-root path="xScript.jar"/>
+    </resources>
+	
+    <dependencies>
+		<module name="javax.api"/>
+        <module name="org.apache.commons.logging"/>
+        <module name="org.apache.logging.log4j" services="import"/>
+        <module name="org.apache.commons.lang3"/>
+        <module name="kenh.expl"/>
+    </dependencies>
+	
+</module>

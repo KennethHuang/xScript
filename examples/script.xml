@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--property 'xmlns' can use both the name of the element package, like 'xScript', and the package directly, like 'kenh.xscript.elements'.-->
+<!--If 'xmlns' does not define, the all element packages will be looked up.-->
+<!--
+<script xmlns="xScript" main-method="main">
+	<method name="main">
+		<println>I'm is xScript</println>
+	</method>
+</script>
+-->
+
+<x:script xmlns:x="xScript">
+	<method name="main">
+		<println>I'm is xScript</println>
+	</method>
+</x:script>

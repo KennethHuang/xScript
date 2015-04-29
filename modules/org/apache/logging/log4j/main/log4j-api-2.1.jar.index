@@ -1,0 +1,14 @@
+
+org/apache/logging/log4j/util
+org/apache/logging/log4j/message
+META-INF/maven
+org/apache/logging/log4j/status
+org
+org/apache/logging/log4j
+META-INF/maven/org.apache.logging.log4j/log4j-api
+META-INF
+org/apache
+org/apache/logging/log4j/spi
+org/apache/logging/log4j/simple
+org/apache/logging
+META-INF/maven/org.apache.logging.log4j
