@@ -809,6 +809,7 @@ public class CoreElementsTest {
 	public void testMethod_var_scope_logic1() throws Throwable {
 		String content = 
 			"<script>" +
+			"	<set var=\"var9\" value=\"9\"/>" +
 			"	<method name=\"main\">" +
 			"		<set var=\"var1\" value=\"0\"/>" +
 			"		<set var=\"public var2\" value=\"0\"/>" +
@@ -818,10 +819,11 @@ public class CoreElementsTest {
 			"		<set var=\"public final var8\" value=\"0\"/>" +
 			"		<call name=\"method1\" var5=\"2\" var6=\"6\" var7=\"7\" var8=\"8\" var=\"public var3\"/>" +
 			"	</method>" +
-			"	<method name=\"method1\" param=\"var5,var6,final var7,final var8\">" +
+			"	<method name=\"method1\" param=\"var5,var6,final var7,final var8,var9\">" +
 			"		<set var=\"var1\" value=\"1\"/>" +
 			"		<set var=\"var2\" value=\"1\"/>" +
 			"		<set var=\"var4\" value=\"1\"/>" +
+			"		<set var=\"public var9_in_method\" value=\"{var9}\"/>" +
 			"		<return value=\"{var1}{var5}\"/>" +
 			"	</method>" +
 			"</script>";
@@ -848,6 +850,8 @@ public class CoreElementsTest {
 		Assert.assertEquals("0", e.getEnvironment().getVariable("var8"));
 		Assert.assertTrue(e.getEnvironment().getPublics().contains("var8"));
 		Assert.assertTrue(e.getEnvironment().getContants().contains("var8"));
+		Assert.assertEquals("", e.getEnvironment().getVariable("var9_in_method"));
+		Assert.assertTrue(e.getEnvironment().getPublics().contains("var9_in_method"));
 	}
 	
 }

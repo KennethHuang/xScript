@@ -200,10 +200,10 @@ public class Call extends NoChildElement {
 			this.getEnvironment().removeVariable(key, false);
 		}
 		
-		keys = new_vars.keySet();
-		for(String key: keys) {
+		// public variable in Environment have the same name with Method's parameter
+		for(String[] parameter: parameters) {
+			String key = StringUtils.trimToEmpty(parameter[0]);
 			if(this.getEnvironment().containsVariable(key)) {
-				// public variable in Environment have the same name with Method's parameter
 				if(constant.contains(key)) {
 					constant.remove(key);
 					keep_cons.add(key);

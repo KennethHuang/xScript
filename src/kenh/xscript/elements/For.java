@@ -57,6 +57,10 @@ public class For extends NormalElement {
 		return process(ref, VARIABLE_REF);
 	}
 	
+	public int process(@Attribute(ATTRIBUTE_REF) Object ref, @Attribute(ATTRIBUTE_SKIP) int skip) throws UnsupportedScriptException {
+		return process(ref, VARIABLE_REF, skip);
+	}
+	
 	public int process(@Attribute(ATTRIBUTE_REF) Object ref, @Attribute(ATTRIBUTE_SUBREF) String subRef) throws UnsupportedScriptException {
 		return process(ref, subRef, 0);
 	}
