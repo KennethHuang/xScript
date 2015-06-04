@@ -21,9 +21,11 @@ package kenh.xscript.impl;
 
 import kenh.xscript.*;
 import kenh.xscript.annotation.Exclude;
+import kenh.xscript.elements.Else;
 import kenh.xscript.elements.Include;
 import kenh.xscript.elements.Method;
 import kenh.xscript.elements.Script;
+import kenh.xscript.elements.Then;
 
 /**
  * Normal element, it can't have {@code Script}, {@code Method}, {@code Include} as child element
@@ -31,7 +33,7 @@ import kenh.xscript.elements.Script;
  * @author Kenneth
  *
  */
-@Exclude({Script.class, Method.class, Include.class})
+@Exclude({Script.class, Method.class, Include.class, Then.class, Else.class})
 public abstract class NormalElement extends BaseElement {
 
 }

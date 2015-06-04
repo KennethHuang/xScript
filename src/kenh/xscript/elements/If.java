@@ -37,7 +37,8 @@ import org.apache.commons.lang3.StringUtils;
  *
  */
 @kenh.xscript.annotation.Include(value={Then.class, Else.class}, number={1,1})
-public class If extends NormalElement {
+@Exclude({Script.class, Method.class, Include.class})
+public class If extends BaseElement {
 
 	private static final String ATTRIBUTE_CONDITION = "cond";
 	
