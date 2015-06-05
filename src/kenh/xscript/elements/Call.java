@@ -221,7 +221,7 @@ public class Call extends NoChildElement {
 		int r = m.processChildren();
 		if(r != RETURN && r != NONE) {
 			if(r == EXCEPTION) {
-				Object ex = this.getEnvironment().getVariable(Catch.VARIABLE_EXCEPTION);
+				Object ex = this.getEnvironment().getVariable(Constant.VARIABLE_EXCEPTION);
 				if(ex instanceof Exception) {
 					if(ex instanceof UnsupportedScriptException) {
 						throw (UnsupportedScriptException)ex;

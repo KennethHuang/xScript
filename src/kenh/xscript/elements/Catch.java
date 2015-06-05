@@ -38,9 +38,6 @@ import kenh.xscript.*;
  */
 public class Catch extends NormalElement {
 	
-	public static final String VARIABLE_EXCEPTION = "@exception";
-	
-
 	public void process() {
 		
 	}
@@ -48,8 +45,8 @@ public class Catch extends NormalElement {
 	public int processException() throws UnsupportedScriptException {
 		int result = invokeChildren();
 		
-		if(this.getEnvironment().containsVariable(VARIABLE_EXCEPTION)) {
-			this.getEnvironment().removeVariable(VARIABLE_EXCEPTION);
+		if(this.getEnvironment().containsVariable(Constant.VARIABLE_EXCEPTION)) {
+			this.getEnvironment().removeVariable(Constant.VARIABLE_EXCEPTION);
 		}
 		
 		return result;

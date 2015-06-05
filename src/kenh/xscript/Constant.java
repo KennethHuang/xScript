@@ -30,8 +30,9 @@ public class Constant {
 	
 	/**
 	 * The variable is refer to current folder of running XML script
-	 * @since 1.0
 	 */
 	public static final String VARIABLE_HOME = "@home";
+	
+	public static final String VARIABLE_EXCEPTION = "@exception";	
 	
 }
