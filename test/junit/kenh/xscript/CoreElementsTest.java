@@ -212,7 +212,7 @@ public class CoreElementsTest {
 	@Test
 	public void testSet_error1() throws Throwable {
 		thrown.expect(UnsupportedScriptException.class);
-		thrown.expectMessage("java.lang.UnsupportedOperationException: [global] is a constant.");
+		thrown.expectMessage("[global] is a constant.");
 		
 		String content = 
 			"<script>" +
@@ -852,6 +852,74 @@ public class CoreElementsTest {
 		Assert.assertTrue(e.getEnvironment().getContants().contains("var8"));
 		Assert.assertEquals("", e.getEnvironment().getVariable("var9_in_method"));
 		Assert.assertTrue(e.getEnvironment().getPublics().contains("var9_in_method"));
+	}
+	
+	
+	// ------------------------ Catch
+	
+	@Test
+	public void testCatch_logic1() throws Throwable {
+		String content = 
+				"<script xmlns:demo=\"junit.kenh.xscript.elements\" xmlns:func.demo=\"junit.kenh.xscript.functions\">" +
+				"	<method name=\"main\">" +
+				"		<catch>" +
+				"			<set var=\"public var1\" value=\"1\"/>" +
+				"		</catch>" +
+				"		<demo:exception/>" +
+				"		<set var=\"public var2\" value=\"2\"/>" +
+				"		<catch>" +
+				"			<set var=\"public var3\" value=\"3\"/>" +
+				"		</catch>" +
+				"		<set var=\"public var4\" value=\"4\"/>" +
+				"		<catch>" +
+				"			<set var=\"public var5\" value=\"5\"/>" +
+				"		</catch>" +
+				"		<demo:exception/>" +
+				"		<catch>" +
+				"			<set var=\"public var6\" value=\"6\"/>" +
+				"		</catch>" +
+				"		<set var=\"public var7\" value=\"7\"/>" +
+				"		<if cond=\"true\">" +
+				"			<then>" +
+				"				<demo:exception/>" +
+				"			</then>" +
+				"		</if>" +
+				"		<catch>" +
+				"			<set var=\"public var8\" value=\"{@exception.getMessage()}\"/>" +
+				"		</catch>" +
+				"		<for from=\"9\" to=\"11\">" +
+				"			<set var=\"public var{@index}\" value=\"{@index}\"/>" +
+				"			<demo:exception/>" +
+				"		</for>" +
+				"		<catch>" +
+				"		</catch>" +
+				"		<for from=\"12\" to=\"13\">" +
+				"			<set var=\"public var{@index}\" value=\"{@index}\"/>" +
+				"			<demo:exception/>" +
+				"			<catch>" +
+				"			</catch>" +
+				"		</for>" +
+				"	</method>" +
+				"</script>";
+		
+		Document doc = Main.stringToDocument(content);
+		Element e = ScriptUtils.getInstance(doc, null);
+		
+		e.invoke();
+		
+		Assert.assertNull(e.getEnvironment().getVariable("var1"));
+		Assert.assertNull(e.getEnvironment().getVariable("var2"));
+		Assert.assertEquals("3", e.getEnvironment().getVariable("var3"));
+		Assert.assertEquals("4", e.getEnvironment().getVariable("var4"));
+		Assert.assertNull(e.getEnvironment().getVariable("var5"));
+		Assert.assertEquals("6", e.getEnvironment().getVariable("var6"));
+		Assert.assertEquals("7", e.getEnvironment().getVariable("var7"));
+		Assert.assertEquals("Oh~! Exception!!!!!!", e.getEnvironment().getVariable("var8"));
+		Assert.assertEquals("9", e.getEnvironment().getVariable("var9"));
+		Assert.assertNull(e.getEnvironment().getVariable("var10"));
+		Assert.assertNull(e.getEnvironment().getVariable("var11"));
+		Assert.assertEquals("12", e.getEnvironment().getVariable("var12"));
+		Assert.assertEquals("13", e.getEnvironment().getVariable("var13"));
 	}
 	
 }

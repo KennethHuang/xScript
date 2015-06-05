@@ -149,4 +149,8 @@ public interface Element {
 	 */
 	public static final int CONTINUE = -3;
 	
+	/**
+	 * Throws an exception. 
+	 */
+	public static final int EXCEPTION = -999;
 }

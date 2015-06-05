@@ -83,8 +83,8 @@ public class While extends NormalElement {
 					break;
 				} else if(result == CONTINUE) {
 					continue;
-				} else if(result == RETURN) {
-					return RETURN;
+				} else if(result != NONE) {
+					return result;
 				}
 			}
 			

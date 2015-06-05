@@ -44,7 +44,7 @@ public class UnsupportedScriptException extends Exception {
     }
     
     public UnsupportedScriptException(Element e, Throwable t) {
-        super(t);
+        super(t.getMessage(), t);
         setElement(e);
     }
     

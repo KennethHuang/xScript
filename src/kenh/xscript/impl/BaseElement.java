@@ -530,14 +530,36 @@ public abstract class BaseElement implements Element {
 	 * @throws UnsupportedScriptException
 	 */
 	protected int invokeChildren() throws UnsupportedScriptException {
+		return invokeChildren(0);
+	}
+	
+	private int invokeChildren(int i) throws UnsupportedScriptException {
 		Vector<Element> children = this.getChildren();
 		
-		for(Element child: children) {
-			int r = child.invoke();
-			if(r != 0) return r;
+		int r = NONE;
+		for(; i< children.size(); i++) {
+			Element child = children.get(i);
+			r = child.invoke();
+			if(r != NONE) break;
 		}
 		
-		return NONE;
+		// If EXCEPTION is return, find Catch element to handle.
+		if(r == EXCEPTION) {
+			for(; i< children.size(); i++) {
+				Element child = children.get(i);
+				if(child instanceof kenh.xscript.elements.Catch) {
+					r = ((kenh.xscript.elements.Catch)child).processException();
+					break;
+				}
+			}
+			if(r != NONE) return r;
+			else {
+				// If Catch element return NONE, go on with children after Catch element.
+				invokeChildren(i);
+			}
+		}
+		
+		return r;
 	}
 	
 	/**

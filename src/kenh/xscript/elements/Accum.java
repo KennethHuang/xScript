@@ -21,8 +21,10 @@ package kenh.xscript.elements;
 
 import org.apache.commons.lang3.StringUtils;
 
+import kenh.xscript.Element;
 import kenh.xscript.UnsupportedScriptException;
 import kenh.xscript.annotation.Attribute;
+import kenh.xscript.annotation.Exclude;
 import kenh.xscript.annotation.IgnoreSuperClass;
 import kenh.xscript.impl.NoChildElement;
 
@@ -34,6 +36,7 @@ import kenh.xscript.impl.NoChildElement;
  *
  */
 @IgnoreSuperClass
+@Exclude(Element.class)
 public class Accum extends Set {
 
 	private static final String ATTRIBUTE_VARIABLE = "var";

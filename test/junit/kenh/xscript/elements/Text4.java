@@ -9,7 +9,7 @@ public class Text4 extends kenh.xscript.impl.BaseElement {
 		return NONE;
 	}
 	
-	public Object getContext() throws Exception {
+	public Object getContext() throws java.lang.Exception {
 		return this.getParsedText();
 	}
 }

@@ -220,6 +220,19 @@ public class Call extends NoChildElement {
 		// 4)invoke the Method's child elements.
 		int r = m.processChildren();
 		if(r != RETURN && r != NONE) {
+			if(r == EXCEPTION) {
+				Object ex = this.getEnvironment().getVariable(Catch.VARIABLE_EXCEPTION);
+				if(ex instanceof Exception) {
+					if(ex instanceof UnsupportedScriptException) {
+						throw (UnsupportedScriptException)ex;
+					} else {
+						UnsupportedScriptException ex_ = new UnsupportedScriptException(this, (Exception)ex);
+						throw ex_;
+					}
+				}
+				
+			}
+			
 			UnsupportedScriptException ex = new UnsupportedScriptException(this, "Unsupported value is returned. [" + r + "]");
 			throw ex;
 		}
