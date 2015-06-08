@@ -34,6 +34,10 @@ public class CoreElementsTest {
 	    };
 	};
 	
+	@After
+	public void afterEachTest() {
+		if(env != null) env.callback();
+	}
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
@@ -52,7 +56,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -75,7 +79,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 	}
@@ -91,7 +95,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 	}
@@ -110,7 +114,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -131,7 +135,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -164,7 +168,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -195,7 +199,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -223,7 +227,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 	}
@@ -248,7 +252,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -285,7 +289,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -315,7 +319,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 	}	
@@ -373,7 +377,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -415,7 +419,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -479,7 +483,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -511,7 +515,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -537,7 +541,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -564,7 +568,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -589,7 +593,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 	}
@@ -616,7 +620,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -641,7 +645,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		try {
 			e.invoke();
@@ -661,7 +665,7 @@ public class CoreElementsTest {
 			"</script>";
 			
 		doc = Main.stringToDocument(content);
-		e = ScriptUtils.getInstance(doc, null);
+		e = ScriptUtils.getInstance(doc, env);
 		
 		try {
 			e.invoke();
@@ -681,7 +685,7 @@ public class CoreElementsTest {
 			"</script>";
 			
 		doc = Main.stringToDocument(content);
-		e = ScriptUtils.getInstance(doc, null);
+		e = ScriptUtils.getInstance(doc, env);
 		
 		try {
 			e.invoke();
@@ -712,7 +716,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 	}
@@ -740,7 +744,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -767,7 +771,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -795,7 +799,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -829,7 +833,7 @@ public class CoreElementsTest {
 			"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		
@@ -903,7 +907,7 @@ public class CoreElementsTest {
 				"</script>";
 		
 		Document doc = Main.stringToDocument(content);
-		Element e = ScriptUtils.getInstance(doc, null);
+		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
 		

@@ -66,4 +66,8 @@ public class Set extends NormalElement {
 		saveVariable(var, value, defaultValue);
 	}
 	
+	public void process(@Attribute(ATTRIBUTE_VALUE) Object value) throws UnsupportedScriptException {
+		
+	}
+	
 }

@@ -7,6 +7,7 @@ import org.junit.rules.ExternalResource;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -29,6 +30,10 @@ public class EnvironmentTest {
 	    };
 	};
 	
+	@After
+	public void afterEachTest() {
+		if(env != null) env.callback();
+	}
 	
 	@Test
 	public void testContants() {

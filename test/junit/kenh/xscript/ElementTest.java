@@ -34,6 +34,10 @@ public class ElementTest {
 	    };
 	};
 	
+	@After
+	public void afterEachTest() {
+		if(env != null) env.callback();
+	}
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
