@@ -14,6 +14,13 @@
         <module name="org.apache.logging.log4j" services="import"/>
         <module name="org.apache.commons.lang3"/>
         <module name="kenh.expl"/>
+		
+		<!--List JDBC driver here-->
+		<module name="org.hsqldb"/>
+		
+		<!--List xScript extension here-->
+        <module name="kenh.xscript.database"/>
+		
     </dependencies>
 	
 </module>

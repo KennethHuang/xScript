@@ -15,6 +15,10 @@
         <module name="org.apache.commons.lang3"/>
         <module name="org.apache.commons.beanutils"/>
         <module name="org.apache.commons.jexl2"/>
+		
+		<!--List ExpL extension here-->
+		<module name="kenh.xscript.database"/>
+		
     </dependencies>
 	
 </module>
