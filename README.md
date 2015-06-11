@@ -1,10 +1,12 @@
-xScript, xml script, it defines the basic logical xml tag, like &lt;if&gt;, &lt;for&gt;, &lt;while&gt;, &lt;method&gt; ect. I think it can simplify your repeating work. You do not need to use programming language, just use xml. It's easy to [define your own xml tag](https://github.com/KennethHuang/xScript/wiki/Define-your-own-element) or [ExpL function](https://github.com/KennethHuang/ExpL/wiki#3-define-a-function).  
+#xScript
+
+**xScript**, xml script, it defines the basic logical xml tag, like &lt;if&gt;, &lt;for&gt;, &lt;while&gt;, &lt;method&gt; ect. I think it can simplify your repeating work. You do not need to use programming language, just use xml. It's easy to [define your own xml tag](https://github.com/KennethHuang/xScript/wiki/Define-your-own-element) or [ExpL function](https://github.com/KennethHuang/ExpL/wiki#3-define-a-function).  
 * xScript use [ExpL](https://github.com/KennethHuang/ExpL) to parse expressions.
 * [xScript.database](https://github.com/KennethHuang/xScript.database) is released. 
   
 **To avoid class verion conflict, I use JBoss Modules. All jar files that xScript reply on, is in _modules_ folder.**   
 
-xScript.bat in _bin_ folder, it starts xScript through JBoss Modules.  
+xScript.bat in _bin_ folder, it can start xScript through JBoss Modules.  
 
 	xScript -f:{xScript file}
 	xScript -file:{xScript file}
@@ -42,7 +44,7 @@ The output:
 ***
 ***
 
-# &lt;script&gt;
+## &lt;script&gt;
 
 Every xScript doc should start with &lt;script&gt; tag. 
 
@@ -71,7 +73,7 @@ _@home_ -- if you use xml file, the value is the path of the folder that the fil
 
 ***
 
-# _xmlns_ attribute 
+## _xmlns_ attribute 
 
 You can use namespace attribute to specify your own xScript or ExpL extension dynamically.   
 _xmlns:&lt;namespace&gt;="&lt;xScript extension package&gt;"_  
@@ -90,7 +92,7 @@ _xmlns:function.&lt;namespace&gt;="&lt;ExpL extension package&gt;"_
 
 ***
 
-# &lt;set&gt;
+## &lt;set&gt;
 
 Initial a variable with specify value.
 
@@ -122,7 +124,7 @@ _final_ -- means this variable can't be changed anymore.
 
 ***
 
-# &lt;condition&gt;
+## &lt;condition&gt;
 
 Sub-element of _Set_, the condition check for &lt;set&gt;.
 
@@ -133,7 +135,7 @@ _value_ -- the value.
 
 ***
 
-# &lt;method&gt;
+## &lt;method&gt;
 
 A method tag.
 
@@ -162,7 +164,7 @@ _default_ -- means default value when this parameter is blank.
 
 ***
 
-# &lt;call&gt;
+## &lt;call&gt;
 
 invoke the method.
 
@@ -183,7 +185,7 @@ other attribute, the parameter of method.
 
 ***
 
-# &lt;return&gt;
+## &lt;return&gt;
 
 Return the value of method. This element will skip the elements after it.
 
@@ -194,7 +196,7 @@ _value_ -- the return value.
 
 ***
 
-# &lt;if&gt;
+## &lt;if&gt;
 
 Condition element. 
 
@@ -219,7 +221,7 @@ _cond_ -- the condition of &lt;if&gt;. If the result is true, use &lt;then&gt; e
 
 ***
 
-# &lt;then&gt;
+## &lt;then&gt;
 
 Sub element of &lt;if&gt;. 
 
@@ -229,7 +231,7 @@ All except for &lt;method&gt;, &lt;script&gt;, &lt;include&gt;
 
 ***
 
-# &lt;else&gt;
+## &lt;else&gt;
 
 Sub element of &lt;if&gt;. 
 
@@ -239,7 +241,7 @@ All except for &lt;method&gt;, &lt;script&gt;, &lt;include&gt;
 
 ***
 
-# &lt;ifthen&gt;
+## &lt;ifthen&gt;
 
 The simple style of &lt;if&gt;-&lt;then&gt;. 
 
@@ -259,7 +261,7 @@ All except for &lt;method&gt;, &lt;script&gt;, &lt;include&gt;
 
 ***
 
-# &lt;while&gt;
+## &lt;while&gt;
 
 Loops, just like _while_ keyword in Java. 
 
@@ -287,7 +289,7 @@ _@index_ -- the loops time.
 
 ***
 
-# &lt;for&gt;
+## &lt;for&gt;
 
 Loops. 
 
@@ -327,19 +329,19 @@ _@ref_ -- the default variable name of sub reference when _sub-ref_ is blank.
 
 ***
 
-# &lt;continue&gt;
+## &lt;continue&gt;
 
 Just like keyword continue in Java, skip the current loop and start the next. 
 
 ***
 
-# &lt;break&gt;
+## &lt;break&gt;
 
 Just like keyword break in Java, jump out of the loops. 
 
 ***
 
-# &lt;accum&gt;
+## &lt;accum&gt;
 
 Accumulator. 
 
@@ -358,7 +360,7 @@ _step_ -- each step.
 
 ***
 
-# &lt;clear&gt;
+## &lt;clear&gt;
 
 Remove the variable. 
 
@@ -368,7 +370,7 @@ _var_ -- the name of variable.
 
 ***
 
-# &lt;include&gt;
+## &lt;include&gt;
 
 Include another xScript doc. 
 
@@ -379,7 +381,7 @@ _url_ -- the url.
 
 ***
 
-# &lt;debug&gt;
+## &lt;debug&gt;
 
 Show debug dialog, list all variables and allow you to test ExpL expression.
 
@@ -389,7 +391,7 @@ _cond_ -- the condition.
 
 ***
 
-# &lt;print&gt;, &lt;println&gt;
+## &lt;print&gt;, &lt;println&gt;
 
 System standard output. &lt;println&gt; is with link break.
 
@@ -410,7 +412,7 @@ These two elements allow text, text is the context you want to output. Same as a
 
 ***
 
-# &lt;param&gt;
+## &lt;param&gt;
 
 Provide the parameter for parent element. 
 
@@ -423,7 +425,7 @@ _link_ -- link another parameter. When use link parameter, it means use another 
 
 ***
 
-# &lt;catch&gt;
+## &lt;catch&gt;
 
 When EXCEPTION is return (process metod return EXCEPTION), the sub-elements of this element will be invoked. 
 `kenh.xscript.database.elements.Execute` is the example of EXCEPTION.
@@ -445,7 +447,7 @@ _@exception_ - The exception.
 ***
 ***
 
-# The scope of variable
+## The scope of variable
 
 The variable define by &lt;set&gt; that under &lt;script&gt; is public variable.  
 The variable define by &lt;set&gt; use _public_ modifier is public variable.  
