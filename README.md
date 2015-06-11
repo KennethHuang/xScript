@@ -23,8 +23,8 @@ Example:
 			<call name="listArray" ref="{[1,2,3,5,7,11]}"/> 
 		</method>  
 		<method name="listArray" param="ref">
-			<for ref="{$ref}">
-				<println value="{$@ref}"/>
+			<for ref="{ref}">
+				<println value="{@ref}"/>
 			</for>
 		</method>	
 	</script>
