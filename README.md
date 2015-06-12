@@ -1,6 +1,8 @@
 #xScript
 
-**xScript**, xml script, it defines the basic logical xml tag, like &lt;if&gt;, &lt;for&gt;, &lt;while&gt;, &lt;method&gt; ect. I think it can simplify your repeating work. You do not need to use programming language, just use xml. It's easy to [define your own xml tag](https://github.com/KennethHuang/xScript/wiki/Define-your-own-element) or [ExpL function](https://github.com/KennethHuang/ExpL/wiki#3-define-a-function).  
+**xScript**, xml script, it defines the basic logical xml tag, like &lt;if&gt;, &lt;for&gt;, &lt;while&gt;, &lt;method&gt; ect. 
+
+**I think xScript is for the guys who is not a programmer, but also has repeating work to do every day. You can ask someone, your co-worker, to develop some tags or function for you. It's easy to [define your own xml tag](https://github.com/KennethHuang/xScript/wiki/Define-your-own-element) or [ExpL function](https://github.com/KennethHuang/ExpL/wiki#3-define-a-function).**  
 * xScript use [ExpL](https://github.com/KennethHuang/ExpL) to parse expressions.
 * [xScript.database](https://github.com/KennethHuang/xScript.database) is released. 
   
@@ -377,7 +379,11 @@ Include another xScript doc.
 ### Attribute
 
 _file_ -- the path of file.  
-_url_ -- the url.
+_url_ -- the url.  
+_load-methods_ -- load method in the doc.  
+_methods_ -- list the methos need to load.  
+_load-publics_ -- load variable under &lt;script&gt; in the doc.  
+
 
 ***
 
@@ -469,4 +475,6 @@ When a method have parameter that the name same as public variable, in the metho
 			<println value="{var2}"/> <!-- 2   display public variable var2 here-->
 		</method>
 	</script>
+
+
 
