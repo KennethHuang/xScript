@@ -8,4 +8,10 @@
 		</set>
 		<println>Author: {$author}</println>
 	</method>
+	<method name="getAuthor">
+		<return value="Kenny"/>
+	</method>
+	<method name="getHost">
+		<return value="GitHub"/>
+	</method>
 </script>

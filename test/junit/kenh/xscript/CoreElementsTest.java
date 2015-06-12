@@ -556,14 +556,14 @@ public class CoreElementsTest {
 	@Test
 	public void testInclude_logic1() throws Throwable {
 		String sep = System.getProperty("file.separator");
-		File f = new File(ScriptUtilsTest.class.getResource("demo" + sep + "demo1.xml").toURI());
-		String url = f.getCanonicalPath();
+		String url = ScriptUtilsTest.class.getResource("demo" + sep + "demo1.xml").toURI().toURL().toString();
 		
 		String content = 
 			"<script>" +
-			"	<include file=\"" + url + "\"/>" +
+			"	<include url=\"" + url + "\"/>" +
 			"	<method name=\"main\">" +
 			"		<set var=\"public global\" value=\"{name}\"/>" +
+			"		<call var=\"author\" name=\"getAuthor\"/>" +
 			"	</method>" +
 			"</script>";
 		
@@ -573,8 +573,57 @@ public class CoreElementsTest {
 		e.invoke();
 		
 		Assert.assertEquals("Kenneth Huang", e.getEnvironment().getVariable("global"));
+		Assert.assertEquals("Kenny", e.getEnvironment().getVariable("author"));
 	}
 
+	@Test
+	public void testInclude_logic2() throws Throwable {
+		String sep = System.getProperty("file.separator");
+		String url = ScriptUtilsTest.class.getResource("demo" + sep + "demo1.xml").toURI().toURL().toString();
+		
+		String content = 
+			"<script>" +
+			"	<include url=\"" + url + "\" load-publics=\"true\" load-methods=\"true\"/>" +
+			"	<method name=\"main\">" +
+			"		<set var=\"public global\" value=\"{name}\"/>" +
+			"		<call var=\"public author\" name=\"getAuthor\"/>" +
+			"	</method>" +
+			"</script>";
+		
+		Document doc = Main.stringToDocument(content);
+		Element e = ScriptUtils.getInstance(doc, env);
+		
+		e.invoke();
+		
+		Assert.assertEquals("Kenneth Huang", e.getEnvironment().getVariable("global"));
+		Assert.assertEquals("Kenny", e.getEnvironment().getVariable("author"));
+	}
+	
+	@Test
+	public void testInclude_logic3() throws Throwable {
+		String sep = System.getProperty("file.separator");
+		String url = ScriptUtilsTest.class.getResource("demo" + sep + "demo1.xml").toURI().toURL().toString();
+		
+		String content = 
+			"<script>" +
+			"	<include url=\"" + url + "\" load-publics=\"true\" load-methods=\"true\" methods=\"getAuthor,getHost\"/>" +
+			"	<method name=\"main\">" +
+			"		<set var=\"public global\" value=\"{name}\"/>" +
+			"		<call var=\"public author\" name=\"getAuthor\"/>" +
+			"		<call var=\"public host\" name=\"getHost\"/>" +
+			"	</method>" +
+			"</script>";
+		
+		Document doc = Main.stringToDocument(content);
+		Element e = ScriptUtils.getInstance(doc, env);
+		
+		e.invoke();
+		
+		Assert.assertEquals("Kenneth Huang", e.getEnvironment().getVariable("global"));
+		Assert.assertEquals("Kenny", e.getEnvironment().getVariable("author"));
+		Assert.assertEquals("GitHub", e.getEnvironment().getVariable("host"));
+	}
+	
 	@Test
 	public void testInclude_error1() throws Throwable {
 		thrown.expect(UnsupportedScriptException.class);
@@ -596,6 +645,55 @@ public class CoreElementsTest {
 		Element e = ScriptUtils.getInstance(doc, env);
 		
 		e.invoke();
+	}
+	
+	@Test
+	public void testInclude_error2() throws Throwable {
+		thrown.expect(UnsupportedScriptException.class);
+		thrown.expectMessage("Could't find the method to invoke. [getAuthor]");
+		
+		String sep = System.getProperty("file.separator");
+		String url = ScriptUtilsTest.class.getResource("demo" + sep + "demo1.xml").toURI().toURL().toString();
+		
+		String content = 
+			"<script>" +
+			"	<include url=\"" + url + "\" load-publics=\"true\"/>" +
+			"	<method name=\"main\">" +
+			"		<set var=\"public global\" value=\"{name}\"/>" +
+			"		<call var=\"author\" name=\"getAuthor\"/>" +
+			"	</method>" +
+			"</script>";
+		
+		Document doc = Main.stringToDocument(content);
+		Element e = ScriptUtils.getInstance(doc, env);
+		
+		e.invoke();
+		
+	}
+	
+	@Test
+	public void testInclude_error3() throws Throwable {
+		thrown.expect(UnsupportedScriptException.class);
+		thrown.expectMessage("Could't find the method to invoke. [getHost]");
+		
+		String sep = System.getProperty("file.separator");
+		String url = ScriptUtilsTest.class.getResource("demo" + sep + "demo1.xml").toURI().toURL().toString();
+		
+		String content = 
+			"<script>" +
+			"	<include url=\"" + url + "\" load-publics=\"true\" load-methods=\"true\" methods=\"getAuthor\"/>" +
+			"	<method name=\"main\">" +
+			"		<set var=\"public global\" value=\"{name}\"/>" +
+			"		<call var=\"author\" name=\"getAuthor\"/>" +
+			"		<call var=\"host\" name=\"getHost\"/>" +
+			"	</method>" +
+			"</script>";
+		
+		Document doc = Main.stringToDocument(content);
+		Element e = ScriptUtils.getInstance(doc, env);
+		
+		e.invoke();
+		
 	}
 	
 	
@@ -653,6 +751,8 @@ public class CoreElementsTest {
 			Assert.assertEquals("Missing parameter. [param1]", e_.getMessage());
 		}
 		
+		env.callback();
+		
 		content = 
 			"<script>" +
 			"	<set var=\"result\" value=\"\"/>" +
@@ -672,6 +772,8 @@ public class CoreElementsTest {
 		} catch(UnsupportedScriptException e_) {
 			Assert.assertEquals("Missing parameter. [param2]", e_.getMessage());
 		}
+		
+		env.callback();
 		
 		content = 
 			"<script>" +

@@ -95,7 +95,7 @@ public class Call extends NoChildElement {
 		
 		Element e = methods.get(name);
 		if(e == null || !(e instanceof Method)) {
-			UnsupportedScriptException ex = new UnsupportedScriptException(this, "Could't find the method to invoke. [" + e == null? name : ( name + "(" + e.getClass().getCanonicalName() + ")" ) + "]");
+			UnsupportedScriptException ex = new UnsupportedScriptException(this, "Could't find the method to invoke. [" + name + "]");
 			throw ex;
 		}
 		

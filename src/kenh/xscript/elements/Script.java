@@ -72,7 +72,7 @@ public class Script extends BaseElement {
 		
 		this.main = main;
 		
-		processChildren(false);
+		processChildren();
 		
 		// find main method
 		Map<String, Element> methods = this.getEnvironment().getMethods();
@@ -116,29 +116,22 @@ public class Script extends BaseElement {
 		return name;
 	}
 	
-	
-	private String getMain() {
+	/**
+	 * Retrives the main-method attribute
+	 * @return
+	 */
+	public String getMainMethod() {
 		String main_ = this.getAttribute(ATTRIBUTE_MAIN_METHOD);
 		return StringUtils.isNotBlank(main)? main: (StringUtils.isNotBlank(main_)? main_:DEFAULT_MAIN_METHOD);
 	}
 	
 	/**
 	 * Invoke all child elements
-	 * @param skipMain  skip main method
 	 * @throws UnsupportedScriptException
 	 */
-	public void processChildren(boolean skipMain) throws UnsupportedScriptException {
-		
-		String main = this.getMain();
-		
+	private void processChildren() throws UnsupportedScriptException {
 		Vector<Element> children = this.getChildren();
 		for(Element child: children) {
-			if(child instanceof Method) {
-				Method m = (Method)child;
-				String methoName = m.getName();
-				if(methoName != null && m.getName().equals(main)) 
-					if(skipMain) continue;
-			}
 			child.invoke();
 		}
 		
