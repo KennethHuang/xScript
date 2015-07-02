@@ -324,7 +324,7 @@ public class ScriptUtils {
 					public boolean accept(File f) {
 						if (f.isDirectory()) {
 							return true;
-						} else if (f.isFile() && f.getName().endsWith(".xml")) {
+						} else if (f.isFile() && StringUtils.endsWithIgnoreCase(f.getName(), ".xml")) {
 							return true;
 						}
 						return false;
@@ -348,7 +348,18 @@ public class ScriptUtils {
 			//debug(e);
 			//System.out.println("----------------------");
 			
-			e.invoke();
+			int result = e.invoke();
+			if(result == Element.EXCEPTION) {
+				Object obj = e.getEnvironment().getVariable(Constant.VARIABLE_EXCEPTION);
+				if(obj != null && obj instanceof Throwable) {
+					System.err.println();
+					((Throwable)obj).printStackTrace();
+					
+				} else {
+					System.err.println();
+					System.err.println("Unknown EXCEPTION is thrown.");
+				}
+			}
 			
 		} catch(Exception ex) {
 			ex.printStackTrace();
