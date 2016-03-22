@@ -57,7 +57,7 @@ public class Script extends BaseElement {
 		
 		if(!this.getEnvironment().containsVariable(Constant.VARIABLE_HOME)) {
 			String cur_dir = System.getProperty("user.dir");
-			this.getEnvironment().setPublicVariable(Constant.VARIABLE_HOME, cur_dir, true);
+			this.getEnvironment().setPublicVariable(Constant.VARIABLE_HOME, cur_dir, false);
 		}
 		
 		if(StringUtils.isNotBlank(scriptName)) {

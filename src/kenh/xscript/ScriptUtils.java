@@ -109,7 +109,7 @@ public class ScriptUtils {
 			Document doc = builder.parse(new FileInputStream(file));
 			String home = file.getCanonicalFile().getParent();
 			if(env != null) {
-				if(!env.containsVariable(Constant.VARIABLE_HOME)) env.setPublicVariable(Constant.VARIABLE_HOME, home, true);
+				if(!env.containsVariable(Constant.VARIABLE_HOME)) env.setPublicVariable(Constant.VARIABLE_HOME, home, false);
 			}
 			return getInstance(doc, env);
 		} catch(UnsupportedScriptException e) {
