@@ -20,6 +20,7 @@
 		
 		<!--List xScript extension here-->
         <module name="kenh.xscript.database"/>
+        <module name="kenh.xscript.os"/>
 		
     </dependencies>
 	
