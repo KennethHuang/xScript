@@ -5,7 +5,8 @@
 **I think xScript is for the guys who is not a programmer, but also has repeating work to do every day. You can ask someone, your co-worker, to develop some tags or function for you. It's easy to [define your own xml tag](https://github.com/KennethHuang/xScript/wiki/Define-your-own-element) or [ExpL function](https://github.com/KennethHuang/ExpL/wiki#3-define-a-function).**  
 * xScript use [ExpL](https://github.com/KennethHuang/ExpL) to parse expressions.
 * [xScript.database](https://github.com/KennethHuang/xScript.database) is released. 
-  
+* [xScript.os](https://github.com/KennethHuang/xScript.os) is released.
+
 **To avoid class verion conflict, I use JBoss Modules. All jar files that xScript reply on, is in _modules_ folder.**   
 
 Set XSCRIPT_HOME, then use xScript.bat in _bin_ folder, it can start xScript through JBoss Modules.  
