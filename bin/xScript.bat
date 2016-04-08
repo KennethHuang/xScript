@@ -1,4 +1,11 @@
 @echo off
+if exist "%XSCRIPT_HOME%\bin\xScript.bat" goto okHome
+echo The XSCRIPT_HOME environment variable is not defined correctly
+echo This environment variable is needed to run this program
+goto end
+
+:okHome
+
 set inPath=%1
 if defined inPath (
   goto op1
@@ -43,7 +50,7 @@ goto end
 
 :op2
 
-java -Xmx512m -Xms512m -jar jboss-modules.jar -mp "..\modules" kenh.xscript %1
+java -Xmx512m -Xms512m -jar %XSCRIPT_HOME%\bin\jboss-modules.jar -mp "%XSCRIPT_HOME%\modules" kenh.xscript %1
 goto end
 
 :end
