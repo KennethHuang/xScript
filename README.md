@@ -2,14 +2,15 @@
 
 **xScript**, xml script, it defines the basic logical xml tag, like &lt;if&gt;, &lt;for&gt;, &lt;while&gt;, &lt;method&gt; ect. 
 
-**I think xScript is for the guys who is not a programmer, but also has repeating work to do every day. You can ask someone, your co-worker, to develop some tags or function for you. It's easy to [define your own xml tag](https://github.com/KennethHuang/xScript/wiki/Define-your-own-element) or [ExpL function](https://github.com/KennethHuang/ExpL/wiki#3-define-a-function).**  
+**I think xScript can link one application with the other. For me, I often need to operate the Excel doc and Oracle, so I use it to read the data from Excel or Oracle or both of them, and finally output the result. Futhermore, it's easy to [define your own xml tag](https://github.com/KennethHuang/xScript/wiki/Define-your-own-element) or [ExpL function](https://github.com/KennethHuang/ExpL/wiki#3-define-a-function).**  
 * xScript use [ExpL](https://github.com/KennethHuang/ExpL) to parse expressions.
 * [xScript.database](https://github.com/KennethHuang/xScript.database) is released. 
 * [xScript.os](https://github.com/KennethHuang/xScript.os) is released.
+* [xScript.io] in progress.
 
 **To avoid class verion conflict, I use JBoss Modules. All jar files that xScript reply on, is in _modules_ folder.**   
 
-Set XSCRIPT_HOME, then use xScript.bat in _bin_ folder, it can start xScript through JBoss Modules.  
+Set XSCRIPT_HOME where xScript be located at, then use xScript.bat in _bin_ folder, it can start xScript through JBoss Modules.  
 
 	xScript -f:{xScript file}
 	xScript -file:{xScript file}
