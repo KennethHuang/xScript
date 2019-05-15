@@ -50,7 +50,7 @@ goto end
 
 :op2
 
-java -Xmx512m -Xms512m -jar %XSCRIPT_HOME%\bin\jboss-modules.jar -mp "%XSCRIPT_HOME%\modules" kenh.xscript %1
+java -Xmx512m -Xms512m -jar %XSCRIPT_HOME%\bin\jboss-modules-1.9.1.Final.jar -mp "%XSCRIPT_HOME%\modules" kenh.xscript %1
 goto end
 
 :end
