@@ -1,1 +1,0 @@
-Commons collections v3.2.1 support Commons BeanUtils v1.9.2, Commons Collections v4 will caused exception.
