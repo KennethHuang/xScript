@@ -1,6 +1,0 @@
-	<method name="main">
-		<set var="author" value="{$name} Huang">
-			<condition cond="#contains({$name},Huang)" value="Kenny Huang"/>
-		</set>
-		<println>Author: {$author}</println>
-	</method>
