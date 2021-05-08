@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>kenh.xscript.all</groupId>
+  <artifactId>xScript.all</artifactId>
+  <version>1.0.0</version>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.2</version>
+        <executions>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <overWriteReleases>false</overWriteReleases>
+              <overWriteSnapshots>false</overWriteSnapshots>
+              <overWriteIfNewer>true</overWriteIfNewer>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+	  
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>kenh.xscript.ScriptUtils</mainClass>
+          <arguments/>
+        </configuration>
+      </plugin>
+    </plugins>
+	
+  </build>
+
+  <dependencies>
+	<dependency>
+		<groupId>kenh.xscript</groupId>
+		<artifactId>xScript</artifactId>
+		<version>1.0.1</version>
+	</dependency>
+	<dependency>
+		<groupId>kenh.xscript.database</groupId>
+		<artifactId>xScript.database</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+	<dependency>
+		<groupId>kenh.xscript.os</groupId>
+		<artifactId>xScript.os</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+	<dependency>
+		<groupId>kenh.xscript.io</groupId>
+		<artifactId>xScript.io</artifactId>
+		<version>1.0.0</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
+	<!--dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<version>1.7.30</version>
+	</dependency-->
+	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+	<dependency>
+		<groupId>org.apache.logging.log4j</groupId>
+		<artifactId>log4j-slf4j-impl</artifactId>
+		<version>2.14.1</version>
+	</dependency>
+  </dependencies>
+  
+</project>

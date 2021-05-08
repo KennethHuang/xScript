@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<script>
+	<method name="main">
+		<call name="sum" var="sum" from="10" to="30" step="3"/>
+		<println>Result: {sum}</println>
+	</method>
+	<method name="sum" param="required from, required to, default(1) step">
+		<set var="sum" value="0"/>
+		<for from="{from}" to="{to}" step="{step}">
+			<if cond="{___index___} mod 2 == 0">
+				<then>
+					<continue/>
+				</then>
+			</if>
+			<println value="{___index___}"/>
+			<set var="sum" value="{{sum} + {___index___}}"/>
+		</for>
+		<return value="{sum}"/>
+	</method>
+</script>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<script xmlns="kenh.xscript.elements">
+
+	<!--this variable 'AUTHOR' is in public scope, it's a publie variable. Keyword 'final' means this variable can't be updated-->
+	<set var="final AUTHOR" value="Kenneth"/>
+	<method name="main">
+		<set var="author" value="Kenny Huang"/>
+		<call name="getName" first="{$AUTHOR}" last="Huang" var="author"/>
+		<call name="getEmail" var="eMail"/>
+		<println>Author: {$author}</println>
+		<println>Email: {$eMail}</println>
+	</method>
+	
+	<!--'required' means this parameter is required, it can't be empty.-->
+	<method name="getName" param="final required first, final required last">
+		<!--this variable 'author' is in method scope, not a publie variable. -->
+		<set var="author" value="{$first} {$last}"/>
+		<return value="{$author}"/>
+	</method>
+	
+	<method name="getEmail">
+		<return value="yourenzhuce@gmail.com"/>
+	</method>
+	
+</script>

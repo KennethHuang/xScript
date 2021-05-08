@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<script xmlns="xScript">
+	<method name="main">
+		<call name="listArray" ref="{[1,2,3,5,7,11]}"/>
+	</method>
+	<method name="listArray" param="ref">
+		<for ref="{ref}">
+			<println value="{___ref___}"/>
+		</for>
+	</method>
+</script>
