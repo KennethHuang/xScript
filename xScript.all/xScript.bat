@@ -9,7 +9,7 @@ if exist "%JAVA_HOME%\bin\java.exe" (
 echo Using java: %LOCAL_JAVA%
 
 :launchs
-SET CP="C:\Users\Kennethh\Desktop\D\Huang\Program\xScript\xScript.all\target\xScript.all-1.0.0.jar;.\target\dependency\*;."
+SET CP=".\target\xScript.all-1.0.0.jar;.\target\dependency\*;."
 
 "%LOCAL_JAVA%" -cp %CP% kenh.xscript.ScriptUtils %1
 
