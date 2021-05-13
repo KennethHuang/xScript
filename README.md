@@ -1,4 +1,4 @@
-#xScript
+# xScript
 
 **xScript**, xml script, it defines the basic logical xml tag, like &lt;if&gt;, &lt;for&gt;, &lt;while&gt;, &lt;method&gt; ect. 
 
@@ -28,7 +28,7 @@ Example:
 		</method>  
 		<method name="listArray" param="ref">
 			<for ref="{ref}">
-				<println value="{@ref}"/>
+				<println value="{___ref___}"/>
 			</for>
 		</method>	
 	</script>
@@ -54,7 +54,7 @@ Every xScript doc should start with &lt;script&gt; tag.
 
 ### Attribute
 
-_name_ -- the name of this script, this name will store to variable _@xScript_, you can use {@xScript} to get the value of this attribute.  
+_name_ -- the name of this script, this name will store to variable _\_\_\_xScript\_\_\__, you can use {\_\_\_xScript\_\_\_} to get the value of this attribute.  
 _main-method_ -- xScript will find the method with this name to invoke. The default vaue is _main_, so if this tag do not have this attribute, the method with the name _'main'_ will be invoked.
 
 ### Sub-elements
@@ -63,15 +63,15 @@ _main-method_ -- xScript will find the method with this name to invoke. The defa
 
 ### Variable
 
-_@xScript_ -- the name of script.  
-_@home_ -- if you use xml file, the value is the path of the folder that the file place, otherwise, the value is use's directory.
+_\_\_\_xScript\_\_\__ -- the name of script.  
+_\_\_\_home\_\_\__ -- if you use xml file, the value is the path of the folder that the file place, otherwise, the value is use's directory.
 
 ### Example
 	<?xml version="1.0"?>
 	<script name="example" main-method="main"> 
 		<method name="main">  
-			<println>Name: {@xScript}</println>
-			<println>Home: {@home}</println>
+			<println>Name: {___xScript___}</println>
+			<println>Home: {___home___}</println>
 		</method>  
 	</script>
 
@@ -280,14 +280,14 @@ All except for &lt;method&gt;, &lt;script&gt;, &lt;include&gt;
 
 ### Variable
 
-_@index_ -- the loops time.  
+_\_\_\_index\_\_\__ -- the loops time.  
 
 ### Example
 
 		<set var="i" value="0"/>
 		<while cond="{i} &lt; 10">
 			<set var="i" value="{{i} + 1}"/>
-			<println>{@index}</println>
+			<println>{___index___}</println>
 		</while>
 
 
@@ -312,23 +312,23 @@ All except for &lt;method&gt;, &lt;script&gt;, &lt;include&gt;
 
 ### Variable
 
-_@index_ -- when use number to loop, the value is the current number; when use reference to loop, the value is the loop time.   
-_@ref_ -- the default variable name of sub reference when _sub-ref_ is blank.
+_\_\_\_index\_\_\__ -- when use number to loop, the value is the current number; when use reference to loop, the value is the loop time.   
+_\_\_\_ref\_\_\__ -- the default variable name of sub reference when _sub-ref_ is blank.
 
 ### Example
 
 	<!--use reference to loop-->
 	<set var="ref" value="{[1,2,3,5,7,11]}"/>
 	<for ref="{ref}">
-		<println value="{@ref}"/> <!--do not specify attribute sub-ref, so use @ref.-->
+		<println value="{___ref___}"/> <!--do not specify attribute sub-ref, so use ___ref___.-->
 	</for>
 	
 	<!--use number to loop-->
 	<for from="0" to="10" step="2">
-		<println value="{@index}"/>
+		<println value="{___index___}"/>
 	</for>
 	<for from="0" to="10">
-		<println value="{@index}"/>
+		<println value="{___index___}"/>
 	</for>
 
 ***
@@ -450,7 +450,7 @@ When EXCEPTION is return (process metod return EXCEPTION), the sub-elements of t
 
 ### Variable
 
-_@exception_ - The exception.
+_\_\_\_exception\_\_\__ - The exception.
 
 ***
 ***
