@@ -8,12 +8,7 @@
 * [xScript.os](https://github.com/KennethHuang/xScript.os) is released.
 * [xScript.io] in progress.
 
-**To avoid class verion conflict, I use JBoss Modules. All jar files that xScript reply on, is in _modules_ folder.**   
-
-Set XSCRIPT_HOME where xScript be located at, then use xScript.bat in _bin_ folder, it can start xScript through JBoss Modules.  
-
-	xScript -f:{xScript file}
-	xScript -file:{xScript file}
+Click the xScript.bat under xScript.all to start this program.
 
 
 ***
