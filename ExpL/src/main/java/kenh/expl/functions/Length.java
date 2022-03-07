@@ -41,9 +41,9 @@ public class Length extends BaseFunction {
 			return java.lang.reflect.Array.getLength(obj);
 		} else if(obj instanceof Collection) {
 			return ((Collection)obj).size();
+		} else {
+			return -1;
 		}
-		
-		return -1;
 	}
 	
 }

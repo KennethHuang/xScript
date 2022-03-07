@@ -46,8 +46,8 @@ public class GetCommonPrefix extends BaseFunction {
 		return StringUtils.getCommonPrefix(str1, str2, str3, str4);
 	}
 	
-	public String process(String[] strs) {
-		return StringUtils.getCommonPrefix(strs);
+	public String process(String[] str) {
+		return StringUtils.getCommonPrefix(str);
 	}
 	
 }

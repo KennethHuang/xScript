@@ -19,11 +19,8 @@
 
 package kenh.expl.functions;
 
-import java.util.*;
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.expl.impl.BaseFunction;
-import kenh.expl.Processing;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Check whether the given CharSequence contains any whitespace characters.

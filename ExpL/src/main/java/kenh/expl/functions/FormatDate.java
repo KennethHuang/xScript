@@ -25,7 +25,7 @@ import java.util.*;
 import kenh.expl.impl.BaseFunction;
 
 /**
- * Format a date to string or conver a string to date.
+ * Format a date to string or convert a string to date.
  * 
  * @author Kenneth
  * @since 1.0

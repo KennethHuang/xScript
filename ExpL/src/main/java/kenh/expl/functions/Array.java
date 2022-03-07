@@ -19,10 +19,6 @@
 
 package kenh.expl.functions;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.expl.UnsupportedExpressionException;
 import kenh.expl.impl.BaseFunction;
 

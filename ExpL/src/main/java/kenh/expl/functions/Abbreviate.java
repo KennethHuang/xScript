@@ -19,11 +19,8 @@
 
 package kenh.expl.functions;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.expl.impl.BaseFunction;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Abbreviates a String.
@@ -45,8 +42,4 @@ public class Abbreviate extends BaseFunction {
 		return StringUtils.abbreviate(str, maxWidth);
 	}
 	
-	public static void main(String[] args) throws Exception {
-		Abbreviate f = new Abbreviate();
-		System.out.println(f.invoke("abcdefghijklmno", "5", "10"));
-	}
 }

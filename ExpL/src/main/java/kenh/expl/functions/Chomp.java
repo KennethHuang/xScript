@@ -19,11 +19,8 @@
 
 package kenh.expl.functions;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.expl.impl.BaseFunction;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Removes one newline from end of a String if it's there,

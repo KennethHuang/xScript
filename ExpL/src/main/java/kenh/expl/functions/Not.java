@@ -19,9 +19,6 @@
 
 package kenh.expl.functions;
 
-import java.util.Vector;
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.expl.impl.BaseFunction;
 
 /**

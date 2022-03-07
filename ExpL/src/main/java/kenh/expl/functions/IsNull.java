@@ -19,7 +19,6 @@
 
 package kenh.expl.functions;
 
-import org.apache.commons.lang3.StringUtils;
 import kenh.expl.impl.BaseFunction;
 
 /**
@@ -35,14 +34,14 @@ public class IsNull extends BaseFunction {
 		if(obj == null) return true;
 		
 		if(obj instanceof String) {
-			String var = (String)obj;
-			
+			String var;
+
+			var = (String)obj;
 			if(var.equals("")) return true;
 			if(!this.getEnvironment().containsVariable(var)) return true;
 			
 			obj = this.getEnvironment().getVariable(var);
-			if(obj == null) return true;
-			return false;
+			return (obj == null);
 		} else {
 			return false;
 		}

@@ -35,9 +35,7 @@ public class IsNotBlank extends BaseFunction {
 		if(obj == null) return false;
 		
 		if(obj instanceof String) {
-			String var = (String)obj;
-			
-			return StringUtils.isNotBlank(var);
+			return StringUtils.isNotBlank((String)obj);
 		} else {
 			return true;
 		}

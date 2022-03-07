@@ -1,3 +1,7 @@
 # Default ignored files
 /*/target/
 /.idea/
+/xScript.ehi/
+ExpL.log
+xScript.log
+xScript.Expl.log

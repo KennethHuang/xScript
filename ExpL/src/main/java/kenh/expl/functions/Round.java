@@ -19,9 +19,8 @@
 
 package kenh.expl.functions;
 
-import java.math.*;
-import org.apache.commons.lang3.StringUtils;
 import kenh.expl.impl.BaseFunction;
+import org.apache.commons.math3.util.Precision;
 
 /**
  * Round the double.
@@ -33,9 +32,7 @@ import kenh.expl.impl.BaseFunction;
 public class Round extends BaseFunction {
 	
 	public double process(double number, int scale) {
-		BigDecimal b = new BigDecimal(number);
-		number = b.setScale(scale, BigDecimal.ROUND_HALF_UP).doubleValue();
-		return number;
+		return Precision.round(number, scale);
 	}
 	
 	public double process(double number) {
