@@ -90,15 +90,15 @@ public class Environment extends kenh.expl.Environment {
 	 */
 	private void initial() {
 
-		// ��ŷ���
+		// store methods
 		Map<String, Element> methods = Collections.synchronizedMap(new LinkedHashMap());
 		this.setVariable(KEY_METHODS, methods);
 
-		// public���͵ı�����
+		// public variables
 		List<String> publics = Collections.synchronizedList(new LinkedList());
 		this.setVariable(KEY_PUBLIC, publics);
 
-		// ����
+		// constant
 		List<String> constant = Collections.synchronizedList(new LinkedList());
 		this.setVariable(KEY_CONSTANT, constant);
 

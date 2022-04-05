@@ -21,6 +21,7 @@ package kenh.expl.functions;
 
 import kenh.expl.UnsupportedExpressionException;
 import kenh.expl.impl.BaseFunction;
+import java.util.Arrays;
 
 /**
  * Return a vector.
@@ -32,28 +33,24 @@ import kenh.expl.impl.BaseFunction;
 public class Vector extends BaseFunction {
 	
 	@Override
-	public java.util.Vector invoke(Object... params) throws UnsupportedExpressionException {
+	public java.util.Vector<Object> invoke(Object... params) throws UnsupportedExpressionException {
 		if(params.length > 0) {
-			java.util.Vector vec = null;
+			java.util.Vector<Object> vector = null;
 			
 			Object obj = params[0];
 			int start = 0;
 			if(obj instanceof java.util.Vector) {
-				vec = (java.util.Vector)obj;
+				vector = (java.util.Vector<Object>)obj;
 				start = 1;
 			} else {
-				vec = new java.util.Vector();
+				vector = new java.util.Vector<Object>();
 			}
-			for(int i=start; i < params.length; i++) {
-				Object obj_ = params[i];
-				vec.add(obj_);
-			}
-			
-			return vec;
+			vector.addAll(Arrays.asList(params).subList(start, params.length));
+
+			return vector;
 			
 		} else {
-			java.util.Vector vec = new java.util.Vector();
-			return vec;
+			return new java.util.Vector<Object>();
 		}
 	}
 }
