@@ -86,7 +86,7 @@ public class Environment implements Callback {
 	
 	/**
 	 * Set the parser, and the parser's environment will be set.
-	 * @param p   The parser
+	 * @param parser   The parser
 	 * @see Parser#setEnvironment(Environment)
 	 */
 	public void setParser(Parser parser) {
@@ -318,7 +318,7 @@ public class Environment implements Callback {
 	 * Get the variable with specify class type.
 	 * 
 	 * @param key
-	 * @param o
+	 * @param c
 	 * @return
 	 */
 	public <T> T getVariable(String key, Class<T> c) {
