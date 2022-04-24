@@ -19,13 +19,12 @@
 
 package kenh.expl;
 
-import java.util.*;
-
 import kenh.expl.impl.ExpLParser;
-
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.*;
 
 /**
  * Environment for ExpL. 
@@ -59,7 +58,7 @@ public class Environment implements Callback {
 	/**
 	 * Logger
 	 */
-	protected static final Log logger = LogFactory.getLog(Environment.class.getName());
+	private Logger logger = LogManager.getLogger(Environment.class);
 	
 	
 	/**
@@ -74,16 +73,34 @@ public class Environment implements Callback {
 	 * @param parser  The parser
 	 */
 	public Environment(Parser parser) {
+		this(parser, null);
+	}
+
+	/**
+	 * Constructor
+	 * @param parser
+	 * @param logger
+	 */
+	public Environment(Parser parser, Logger logger) {
 		if(parser == null) parser = new ExpLParser();
-		
-		setParser(parser);		
+		if(logger != null) this.logger = logger;
+
+		setParser(parser);
 		setFunctionPackage("expl", "kenh.expl.functions");  // default function package
-		
+
 		loadFunctionPackages_SystemProperties();
 		loadFunctionPackages_Extension();
 		//setVariable("@system", System.getProperties());
 	}
-	
+
+	/**
+	 * Get logger
+	 * @return
+	 */
+	public Logger getLogger() {
+		return logger;
+	}
+
 	/**
 	 * Set the parser, and the parser's environment will be set.
 	 * @param parser   The parser
@@ -354,10 +371,10 @@ public class Environment implements Callback {
 			Object oldObj = variables.remove(key);
 			callback(oldObj);
 			variables.put(key, obj);
-			logger.debug("Replace var: " + key + ", " + ((obj == null)?"<null>":obj.toString()));
+			logger.trace("[EXPL] Replace var: " + key + ", " + ((obj == null)?"<null>":obj.toString()));
 		} else {
 			variables.put(key, obj);
-			logger.debug("Add var: " + key + ", " + ((obj == null)?"<null>":obj.toString()));
+			logger.trace("[EXPL] Add var: " + key + ", " + ((obj == null)?"<null>":obj.toString()));
 		}
 	}
 	
@@ -387,9 +404,9 @@ public class Environment implements Callback {
 			c = true;
 		}
 		if(c) {
-			logger.debug("Remove var(C): " + key);
+			logger.trace("[EXPL] Remove var(C): " + key);
 		} else {
-			logger.debug("Remove var: " + key);
+			logger.trace("[EXPL] Remove var: " + key);
 		}
 		return oldObj;
 	}

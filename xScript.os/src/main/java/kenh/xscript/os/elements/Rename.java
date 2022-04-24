@@ -40,8 +40,8 @@ public class Rename extends NoChildElement {
 			destPath = destFile.getCanonicalPath();
 			
 		} catch(Exception e) {}
-		
-		logger.trace(this.getClass().getName().toUpperCase() + " " + path.getPath() + "->" + destPath);
+
+		getLogger().trace("[XSCRIPT] " + this.getClass().getName().toUpperCase() + " " + path.getPath() + "->" + destPath);
 	}
 	
 	public void process(@Attribute(ATTRIBUTE_PATH) String path, @Attribute(ATTRIBUTE_DEST) String dest) throws UnsupportedScriptException {

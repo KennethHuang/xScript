@@ -19,14 +19,11 @@
 
 package kenh.xscript.elements;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.expl.UnsupportedExpressionException;
-import kenh.xscript.annotation.*;
+import kenh.xscript.UnsupportedScriptException;
+import kenh.xscript.annotation.Attribute;
+import kenh.xscript.annotation.Primal;
 import kenh.xscript.impl.NormalElement;
-import kenh.xscript.*;
 
 /**
  * While element.

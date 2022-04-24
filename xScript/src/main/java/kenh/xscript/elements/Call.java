@@ -29,7 +29,7 @@ import kenh.xscript.*;
 
 /**
  * Call the method, invoke the elements in method.
- * example£º
+ * example:
  * <code>&lt;method name="methodName" param="one, two"&gt;
  * ...
  * &lt;/method&gt;
@@ -68,7 +68,7 @@ public class Call extends NoChildElement {
 	@Override
 	public int invoke() throws UnsupportedScriptException {
 		
-		logger.info(getInfo());
+		this.getLogger().debug("[XSCRIPT] " + getInfo());
 		
 		this.getEnvironment().removeVariable(Return.VARIABLE_RETURN); // clear {return}
 		

@@ -26,7 +26,7 @@ public class Dir extends NoChildElement {
 		String[] names = path.list();
 		this.saveVariable(var, names, null);
 		
-		logger.trace(this.getClass().getName().toUpperCase() + " " + path.getPath());
+		getLogger().trace("[XSCRIPT] " + this.getClass().getName().toUpperCase() + " " + path.getPath());
 	}
 	
 	public void process(@Attribute(ATTRIBUTE_PATH) String path, @Attribute(ATTRIBUTE_VARIABLE) String var) throws UnsupportedScriptException {
@@ -47,8 +47,8 @@ public class Dir extends NoChildElement {
 		if(dirOnly) {
 			String[] names = path.list(true);
 			this.saveVariable(var, names, null);
-			
-			logger.trace(this.getClass().getName().toUpperCase() + " " + path.getPath());
+
+			getLogger().trace("[XSCRIPT] " + this.getClass().getName().toUpperCase() + " " + path.getPath());
 			
 		} else {
 			process(path, var);
@@ -73,8 +73,8 @@ public class Dir extends NoChildElement {
 		if(fileOnly) {
 			String[] names = path.listFiles(ext);
 			this.saveVariable(var, names, null);
-			
-			logger.trace(this.getClass().getName().toUpperCase() + " " + path.getPath());
+
+			getLogger().trace("[XSCRIPT] " + this.getClass().getName().toUpperCase() + " " + path.getPath());
 			
 		} else {
 			process(path, var);

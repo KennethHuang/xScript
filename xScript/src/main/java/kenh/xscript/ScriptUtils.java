@@ -19,23 +19,25 @@
 
 package kenh.xscript;
 
-import java.io.*;
+import kenh.xscript.elements.Script;
+import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.w3c.dom.*;
-import org.xml.sax.SAXException;
-
-import java.util.*;
-import java.lang.reflect.Method;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.net.URL;
-
-import kenh.xscript.elements.Script;
+import java.util.Map;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * Static method for initialing xScript instance.

@@ -19,16 +19,16 @@
 
 package kenh.xscript.elements;
 
+import kenh.xscript.Constant;
+import kenh.xscript.Element;
+import kenh.xscript.UnsupportedScriptException;
 import kenh.xscript.annotation.Attribute;
-import kenh.xscript.impl.*;
-import kenh.xscript.*;
-
-import java.io.File;
-import java.util.*;
-
+import kenh.xscript.annotation.Processing;
+import kenh.xscript.impl.BaseElement;
 import org.apache.commons.lang3.StringUtils;
 
-import kenh.xscript.annotation.*;
+import java.util.Map;
+import java.util.Vector;
 
 /**
  * First element of xScript document.

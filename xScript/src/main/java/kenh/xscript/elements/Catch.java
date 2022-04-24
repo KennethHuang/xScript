@@ -19,18 +19,13 @@
 
 package kenh.xscript.elements;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
-import kenh.xscript.annotation.Attribute;
-import kenh.xscript.annotation.Processing;
+import kenh.xscript.Constant;
+import kenh.xscript.UnsupportedScriptException;
 import kenh.xscript.impl.NormalElement;
-import kenh.xscript.*;
 
 /**
  * 
- * Catch element. When any element return <code>EXCEPTION</code>, this element will be ask to handle.
+ * Catch element. When any element return <code>EXCEPTION</code>, this element will be asked to handle.
  * 
  * @author Kenneth
  * @since 1.0

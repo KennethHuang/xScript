@@ -29,7 +29,7 @@ public class Cd extends NoChildElement {
 		String home = path.getPath();
 		this.getEnvironment().setPublicVariable(Constant.VARIABLE_HOME, home, false);
 		
-		logger.trace(this.getClass().getName().toUpperCase() + " " + path.getPath());
+		this.getLogger().trace("[XSCRIPT] " + this.getClass().getName().toUpperCase() + " " + path.getPath());
 	}
 	
 	public void process(@Attribute(ATTRIBUTE_PATH) String path) throws UnsupportedScriptException {

@@ -22,8 +22,8 @@ public class Mkdir extends NoChildElement {
 		if(path == null) throw new UnsupportedScriptException(this, "Path is empty.");
 		
 		new $File$(path).getIOFile().mkdirs();
-		
-		logger.trace(this.getClass().getName().toUpperCase() + " " + path.getPath());
+
+		getLogger().trace("[XSCRIPT] " + this.getClass().getName().toUpperCase() + " " + path.getPath());
 	}
 	
 	public void process(@Attribute(ATTRIBUTE_PATH) String path) throws UnsupportedScriptException {

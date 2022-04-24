@@ -19,8 +19,6 @@
 
 package kenh.expl;
 
-import java.util.Vector;
-
 /**
  * The function interface of ExpL.
  * @author Kenneth

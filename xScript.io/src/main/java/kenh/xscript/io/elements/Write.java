@@ -45,7 +45,7 @@ public class Write extends NoChildElement {
 	@Override
 	public int invoke() throws UnsupportedScriptException {
 		
-		logger.info(getInfo());
+		this.getLogger().debug("[XSCRIPT] " + getInfo());
 		
 		// Writer
 		

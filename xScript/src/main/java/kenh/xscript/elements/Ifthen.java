@@ -19,15 +19,10 @@
 
 package kenh.xscript.elements;
 
-import java.util.*;
-
-import org.apache.commons.lang3.StringUtils;
-
+import kenh.xscript.UnsupportedScriptException;
 import kenh.xscript.annotation.Attribute;
-import kenh.xscript.annotation.Processing;
 import kenh.xscript.annotation.Reparse;
 import kenh.xscript.impl.NormalElement;
-import kenh.xscript.*;
 
 /**
  * If and Then combination.

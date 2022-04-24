@@ -61,7 +61,7 @@ public class Copy extends NoChildElement {
 			}
 		}
 		
-		logger.trace(this.getClass().getName().toUpperCase() + " " + path.getPath() + "->" + dest.getPath());
+		this.getLogger().trace("[XSCRIPT] " + this.getClass().getName().toUpperCase() + " " + path.getPath() + "->" + dest.getPath());
 	}
 	
 	public void process(@Attribute(ATTRIBUTE_PATH) String path, @Attribute(ATTRIBUTE_DEST) kenh.xscript.os.beans.File dest, @Attribute(ATTRIBUTE_CUT) boolean cut ) throws UnsupportedScriptException {

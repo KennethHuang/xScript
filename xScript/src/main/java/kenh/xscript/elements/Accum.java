@@ -19,14 +19,12 @@
 
 package kenh.xscript.elements;
 
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.xscript.Element;
 import kenh.xscript.UnsupportedScriptException;
 import kenh.xscript.annotation.Attribute;
 import kenh.xscript.annotation.Exclude;
 import kenh.xscript.annotation.IgnoreSuperClass;
-import kenh.xscript.impl.NoChildElement;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Accumulator. It will plus a number for certain variable.

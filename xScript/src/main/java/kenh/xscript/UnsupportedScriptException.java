@@ -19,9 +19,6 @@
 
 package kenh.xscript;
 
-import java.io.PrintStream;
-import java.util.Stack;
-
 /**
  * The exception of xScript.
  * 

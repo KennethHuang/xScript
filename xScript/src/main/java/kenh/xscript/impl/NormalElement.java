@@ -19,13 +19,8 @@
 
 package kenh.xscript.impl;
 
-import kenh.xscript.*;
 import kenh.xscript.annotation.Exclude;
-import kenh.xscript.elements.Else;
-import kenh.xscript.elements.Include;
-import kenh.xscript.elements.Method;
-import kenh.xscript.elements.Script;
-import kenh.xscript.elements.Then;
+import kenh.xscript.elements.*;
 
 /**
  * Normal element, it can't have {@code Script}, {@code Method}, {@code Include} as child element

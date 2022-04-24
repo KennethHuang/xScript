@@ -299,8 +299,7 @@ public class Execute extends NormalElement {
 	
 	/**
 	 * Execute sql.
-	 * @param sql  
-	 * @param parameter
+	 * @param sqlBean
 	 * @param var   variable name of result
 	 * @param conn
 	 */
@@ -342,7 +341,7 @@ public class Execute extends NormalElement {
 				i++;
 			}
 			
-			logger.trace(traceInfo.toString());
+			this.getLogger().trace("[XSCRIPT] " + traceInfo.toString());
 			
 			boolean result = false;
 			

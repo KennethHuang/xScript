@@ -19,16 +19,18 @@
 
 package kenh.xscript.elements;
 
-import kenh.xscript.annotation.*;
-import kenh.xscript.impl.BaseElement;
+import kenh.xscript.Constant;
+import kenh.xscript.Element;
+import kenh.xscript.ScriptUtils;
+import kenh.xscript.UnsupportedScriptException;
+import kenh.xscript.annotation.Attribute;
+import kenh.xscript.annotation.Processing;
 import kenh.xscript.impl.NoChildElement;
-import kenh.xscript.*;
+import org.apache.commons.lang3.StringUtils;
 
-import java.io.*;
+import java.io.File;
 import java.net.URL;
 import java.util.Vector;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * Include element, use to include another xScript.

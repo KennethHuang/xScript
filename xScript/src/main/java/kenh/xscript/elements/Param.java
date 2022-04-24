@@ -19,15 +19,15 @@
 
 package kenh.xscript.elements;
 
-import java.util.Vector;
-
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.expl.UnsupportedExpressionException;
-import kenh.xscript.annotation.*;
+import kenh.xscript.Environment;
+import kenh.xscript.UnsupportedScriptException;
+import kenh.xscript.annotation.Attribute;
+import kenh.xscript.annotation.Primal;
+import kenh.xscript.annotation.Processing;
+import kenh.xscript.annotation.Text;
 import kenh.xscript.beans.ParamBean;
 import kenh.xscript.impl.NoChildElement;
-import kenh.xscript.*;
 
 /**
  * Provide the parameter for parent element.

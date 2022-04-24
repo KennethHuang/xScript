@@ -19,14 +19,9 @@
 
 package kenh.expl.impl;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import kenh.expl.*;
-
+import kenh.expl.Environment;
+import kenh.expl.UnsupportedExpressionException;
 import org.apache.commons.jexl3.*;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * The parser use JEXL.

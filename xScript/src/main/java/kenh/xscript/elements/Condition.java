@@ -19,11 +19,10 @@
 
 package kenh.xscript.elements;
 
-import org.apache.commons.lang3.StringUtils;
-
-import kenh.xscript.annotation.*;
+import kenh.xscript.UnsupportedScriptException;
+import kenh.xscript.annotation.Attribute;
+import kenh.xscript.annotation.Reparse;
 import kenh.xscript.impl.NoChildElement;
-import kenh.xscript.*;
 
 /**
  * Child element of <code>Set</code>.

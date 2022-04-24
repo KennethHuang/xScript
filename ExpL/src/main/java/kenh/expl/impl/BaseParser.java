@@ -19,11 +19,11 @@
 
 package kenh.expl.impl;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import kenh.expl.*;
+import kenh.expl.Environment;
+import kenh.expl.Parser;
+import kenh.expl.UnsupportedExpressionException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Provide the base method for sub parser.
@@ -35,22 +35,23 @@ import kenh.expl.*;
 public abstract class BaseParser implements Parser {
 	
 	private Environment env = null;
-	
-	/**
-	 * Logger
-	 */
-	protected static final Log logger = LogFactory.getLog(Parser.class.getName());
+	private Logger logger = LogManager.getLogger(BaseParser.class);
 	
 	@Override
 	public void setEnvironment(Environment env) {
 		this.env = env;
+		if(env.getLogger() != null) this.logger = env.getLogger();
 	}
 
 	@Override
 	public Environment getEnvironment() {
 		return env;
 	}
-	
+
+	protected Logger getLogger() {
+		return logger;
+	}
+
 	/**
 	 * Convert to string
 	 * @param obj

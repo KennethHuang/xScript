@@ -23,6 +23,7 @@ import java.util.*;
 
 import kenh.expl.Parser;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.Logger;
 
 /**
  * The subclass of ExpL's environment, to support xScript.
@@ -74,7 +75,16 @@ public class Environment extends kenh.expl.Environment {
 	 * @param parser
 	 */
 	public Environment(Parser parser) {
-		super(parser);
+		this(parser, null);
+	}
+
+	/**
+	 * Constructor
+	 * @param parser
+	 * @param logger
+	 */
+	public Environment(Parser parser, Logger logger) {
+		super(parser, logger);
 
 		setElementPackage("xScript", "kenh.xscript.elements"); // the base package for elements
 		setFunctionPackage("xScript", "kenh.xscript.functions"); // the function package of xScript
@@ -291,7 +301,7 @@ public class Environment extends kenh.expl.Environment {
 		List<String> publics = this.getPublics();
 		if(publics.contains(key)) {
 			publics.remove(key);
-			logger.trace("Remove public factor: " + key);
+			this.getLogger().trace("[XSCRIPT] Remove public variable: " + key);
 		}
 
 		return obj;
@@ -311,7 +321,7 @@ public class Environment extends kenh.expl.Environment {
 			List<String> constant = (List<String>)this.getVariable(KEY_CONSTANT);
 			if(!constant.contains(key)){
 				constant.add(key);
-				logger.trace("Add constant factor: " + key);
+				this.getLogger().trace("[XSCRIPT] Add constant variable: " + key);
 			}
 		}
 	}
@@ -328,14 +338,14 @@ public class Environment extends kenh.expl.Environment {
 		List<String> publics = (List<String>)this.getVariable(KEY_PUBLIC);
 		if(!publics.contains(key)) {
 			publics.add(key);
-			logger.trace("Add public factor: " + key);
+			this.getLogger().trace("[XSCRIPT] Add public variable: " + key);
 		}
 
 		if(isConstant) {
 			List<String> constant = (List<String>)this.getVariable(KEY_CONSTANT);
 			if(!constant.contains(key)) {
 				constant.add(key);
-				logger.trace("Add constant factor: " + key);
+				this.getLogger().trace("[XSCRIPT] Add constant variable: " + key);
 			}
 		}
 	}

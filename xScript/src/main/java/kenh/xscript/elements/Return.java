@@ -19,14 +19,9 @@
 
 package kenh.xscript.elements;
 
-import kenh.xscript.annotation.*;
-import kenh.xscript.impl.BaseElement;
+import kenh.xscript.UnsupportedScriptException;
+import kenh.xscript.annotation.Attribute;
 import kenh.xscript.impl.NoChildElement;
-import kenh.xscript.*;
-
-import java.io.*;
-import java.net.URL;
-import java.util.Vector;
 
 /**
  * Return from {@code Method}, and store return value.

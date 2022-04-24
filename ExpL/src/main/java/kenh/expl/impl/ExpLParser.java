@@ -1,64 +1,62 @@
 /*
  * ExpL (Expression Language)
  * Copyright 2014 and beyond, Kenneth Huang
- * 
+ *
  * This file is part of ExpL.
- * 
+ *
  * ExpL is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License version 3
  * as published by the Free Software Foundation.
- * 
- * ExpL is distributed in the hope that it will be useful, 
+ *
+ * ExpL is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
- * License along with ExpL.  If not, see <http://www.gnu.org/licenses/>. 
+ * License along with ExpL.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package kenh.expl.impl;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.JOptionPane;
-
-import kenh.expl.*;
-
+import kenh.expl.Environment;
+import kenh.expl.Function;
+import kenh.expl.Parser;
+import kenh.expl.UnsupportedExpressionException;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import javax.swing.*;
+import java.util.Vector;
+import java.util.regex.Pattern;
 
 /**
  * The ExpL parser, support variable nesting, function
- * for example: {$var}£¬{$var_{$no}}£¬{#function1({$para1},2,{#function2()})}£¬{1+1} etc.
- * 
+ * for example: {$var}, {$var_{$no}}, {#function1({$para1},2,{#function2()})}, {1+1} etc.
+ *
  * @author Kenneth
  * @since 1.0
  *
  */
 public class ExpLParser extends BaseParser {
-	
+
 	/**
 	 * the function name pattern, support name space.
 	 */
-	private static Pattern funcNamePattern = Pattern.compile("#[a-zA-Z]([a-zA-Z]|[0-9]|_)*(:[a-zA-Z]([a-zA-Z]|[0-9]|_)*)?");  // Ö§³ÖFunctionÃüÃû¿Õ¼ä
-	
+	private static Pattern funcNamePattern = Pattern.compile("#[a-zA-Z]([a-zA-Z]|[0-9]|_)*(:[a-zA-Z]([a-zA-Z]|[0-9]|_)*)?");  // Ö§ï¿½ï¿½Functionï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½
+
 	/**
 	 * Sub parser, the default is JEXLParser
 	 */
-	private Parser subParser = null; 
-	
-	
+	private Parser subParser = null;
+
 	/**
 	 * Constructor
 	 */
 	public ExpLParser() {
 		this(new JEXLParser());
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param parser   The sub parser
@@ -66,31 +64,31 @@ public class ExpLParser extends BaseParser {
 	public ExpLParser(Parser parser) {
 		subParser = parser;
 	}
-	
+
 	@Override
 	public void setEnvironment(Environment env) {
 		super.setEnvironment(env);
 		if(subParser != null) subParser.setEnvironment(env);
 	}
-	
+
 	@Override
 	public Object parse(String express) throws UnsupportedExpressionException {
 		Object obj = parseExpress(express);
-		logger.info(express + " -> " + ((obj == null)?"<null>":obj.toString()));
+		this.getLogger().debug("[EXPL] " + express + " -> " + ((obj == null)?"<null>":obj.toString()));
 		return obj;
 	}
-	
+
 	@Override
 	public Object[] parse(String express, boolean split) throws UnsupportedExpressionException {
 		if (express == null) {
 			UnsupportedExpressionException e = new UnsupportedExpressionException("Expression is null.");
 			throw e;
 		}
-		
+
 		if(split) {
-			
+
 			String[] parts = splitParameter(express);
-			
+
 			Object[] objs = new Object[parts.length];
 			int i=0;
 			for(String part: parts) {
@@ -101,17 +99,17 @@ public class ExpLParser extends BaseParser {
 					objs[i++] = part;
 				}
 			}
-			
+
 			return objs;
-			
+
 		}  else {
-			
+
 			return new Object[] { this.parse(express) };
-			
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * Parse the expression.
 	 * This method will looking for string in brace, and get the value back.
@@ -123,25 +121,25 @@ public class ExpLParser extends BaseParser {
 			UnsupportedExpressionException e = new UnsupportedExpressionException("Expression is null.");
 			throw e;
 		}
-		
-		logger.trace("Expr: " + express);
-		
+
+		this.getLogger().trace("[EXPL] Expr: " + express);
+
 		int left = StringUtils.countMatches(express, "{");
 		int right = StringUtils.countMatches(express, "}");
-		
+
 		if(left != right) {
 			UnsupportedExpressionException ex = new UnsupportedExpressionException("'{' and '}' does not match.");
 			ex.push(express);
 			throw ex;
 		}
-		
+
 		if(left == 0) return express;
-		
+
 		String sResult = null;	// String type result
 		Object oResult = null;	// Non-string type result
-		
+
 		StringBuffer resultBuffer = new StringBuffer();
-		
+
 		try {
 			String context = express;
 			while(!context.equals("")) {
@@ -150,7 +148,7 @@ public class ExpLParser extends BaseParser {
 				if(!s[1].equals("")) {
 					String variable = StringUtils.substring(s[1], 1, s[1].length()-1);
 					Object obj = getVariableValue(variable);
-					logger.debug(variable + " -> " + ((obj == null)?"<null>":obj.toString()));
+					this.getLogger().trace("[EXPL] " + variable + " -> " + ((obj == null)?"<null>":obj.toString()));
 					try {
 						String str = convertToString(obj);
 						resultBuffer.append(str);
@@ -166,7 +164,7 @@ public class ExpLParser extends BaseParser {
 				context = s[2];
 			}
 
-			
+
 		} catch(UnsupportedExpressionException e) {
 			e.push(express);
 			throw e;
@@ -175,7 +173,7 @@ public class ExpLParser extends BaseParser {
 			ex.push(express);
 			throw ex;
 		}
-		
+
 		sResult = resultBuffer.toString();
 		Object returnObj = null;
 		if(StringUtils.isBlank(sResult)) {
@@ -189,17 +187,17 @@ public class ExpLParser extends BaseParser {
 			}
 			else returnObj = sResult;
 		}
-		
-		logger.debug(express + " -> " + ((returnObj == null)?"<null>":returnObj.toString()));
+
+		this.getLogger().trace("[EXPL] " + express + " -> " + ((returnObj == null)?"<null>":returnObj.toString()));
 		return returnObj;
 	}
-	
+
 	/**
 	 * Get the value in brace.
 	 * $      - it will be a variable in environment.
 	 * #      - will be a function
 	 * other  - use sub parser
-	 * 
+	 *
 	 * @param variable  the string in brace.
 	 * @return  Return string or non-string object. Return empty string instead of null.
 	 * @throws UnsupportedExpressionException
@@ -209,12 +207,12 @@ public class ExpLParser extends BaseParser {
 			UnsupportedExpressionException e = new UnsupportedExpressionException("Variable is null.");
 			throw e;
 		}
-		
-		logger.trace("Var: " + variable);
-		
+
+		this.getLogger().trace("[EXPL] Var: " + variable);
+
 		if (variable.startsWith("$")) {
 			// $ - it will be a variable in environment.
-			
+
 			if (variable.indexOf('{') != -1) {
 				Object obj = this.parseExpress(variable);
 				if(obj instanceof String) {
@@ -225,12 +223,12 @@ public class ExpLParser extends BaseParser {
 					throw ex;
 				}
 			}
-			
+
 			String name = variable.substring(1);
 			int index = name.indexOf('.');
 			if (index == -1) {
 				return this.getEnvironment().getVariable(name);
-				
+
 			} else {
 				// use BeanUtils
 				String str = name.substring(index + 1);
@@ -246,32 +244,32 @@ public class ExpLParser extends BaseParser {
 					return "";
 				}
 			}
-			
+
 		} else if (variable.startsWith("#")) {
-			
+
 			// # - will be a function
-			
+
 			int left = StringUtils.countMatches(variable, "(");
 			int right = StringUtils.countMatches(variable, ")");
-			
+
 			if(left != right) {
 				UnsupportedExpressionException ex = new UnsupportedExpressionException("'(' and ')' does not match.");
 				ex.push(variable);
 				throw ex;
 			}
-			
+
 			String funcName = StringUtils.substringBefore(variable, "(");
 			String funcAfter = StringUtils.substringAfterLast(variable, ")");
-			
+
 			if(StringUtils.isNotBlank(funcAfter)) {
 				UnsupportedExpressionException e = new UnsupportedExpressionException("Function parse error.");
 				e.push(variable);
 				throw e;
 			}
-			
+
 			if(funcNamePattern.matcher(funcName).matches()) {
 				Object result = executeFunction(variable);
-				logger.debug(variable + " -> " + ((result == null)?"<null>":result.toString()));
+				this.getLogger().trace("[EXPL] " + variable + " -> " + ((result == null)?"<null>":result.toString()));
 				if(result == null) return "";
 				return result;
 			} else {
@@ -279,9 +277,9 @@ public class ExpLParser extends BaseParser {
 				e.push(variable);
 				throw e;
 			}
-			
+
 		} else {
-			
+
 			if (variable.indexOf('{') != -1) {
 				Object obj = this.parseExpress(variable);
 				if(obj instanceof String) {
@@ -292,7 +290,7 @@ public class ExpLParser extends BaseParser {
 					throw ex;
 				}
 			}
-			
+
 			// use sub parser
 			try {
 				return subParser.parse(variable);
@@ -304,42 +302,42 @@ public class ExpLParser extends BaseParser {
 				ex.push(variable);
 				throw ex;
 			}
-			
+
 		}
 	}
-	
-	
+
+
 	/**
 	 * Invoke functioin, support name space. For example, expl:contains(...).
 	 * @param function
 	 * @return  Return string or non-string object. Return empty string instead of null.
 	 */
 	private Object executeFunction(String function) throws UnsupportedExpressionException { // function should return a string object;
-		
+
 		if (StringUtils.isBlank(function)) {
 			UnsupportedExpressionException e = new UnsupportedExpressionException("Function is null.");
 			throw e;
 		}
-		
-		logger.trace("Func: " + function);
-		
+
+		this.getLogger().trace("[EXPL] Func: " + function);
+
 		String parameter = StringUtils.substringBeforeLast(StringUtils.substringAfter(function, "("), ")");
-		
+
 		String[] parts = splitParameter(parameter);
 		String funcName = StringUtils.substringBetween(function, "#", "(");
 		String nameSpace = null;
-		
+
 		if(StringUtils.contains(funcName, ":")) {
 			nameSpace = StringUtils.substringBefore(funcName, ":");
 			funcName = StringUtils.substringAfter(funcName, ":");
 		}
-		
+
 		if(StringUtils.isBlank(funcName)) {
 			UnsupportedExpressionException e = new UnsupportedExpressionException("Failure to get function name");
 			e.push(function);
 			throw e;
 		}
-		
+
 		Object[] objs = new Object[parts.length];
 		int i=0;
 		for(String part: parts) {
@@ -350,27 +348,27 @@ public class ExpLParser extends BaseParser {
 				objs[i++] = part;
 			}
 		}
-		
+
 		try {
 			// instantiate it, and create the parameters
 			Function func = this.getEnvironment().getFunction(nameSpace, funcName);
 			if(func == null) throw new UnsupportedExpressionException("Can't find the function. [" + (StringUtils.isBlank(nameSpace)? funcName : nameSpace + ":" + funcName) + "]");
-			
+
 			func.setEnvironment(this.getEnvironment());
-			
+
 			// invoke
 			return func.invoke(objs);
 		} catch(UnsupportedExpressionException e) {
 			e.push(function);
 			throw e;
-			
+
 		} catch (Exception ex) {
 			UnsupportedExpressionException e = new UnsupportedExpressionException(ex);
 			e.push(function);
 			throw e;
 		}
 	}
-	
+
 	/**
 	 * Get the parameters for function, use ',' to split each parameter.
 	 * @param parameter
@@ -378,12 +376,12 @@ public class ExpLParser extends BaseParser {
 	 */
 	private static String[] splitParameter(String parameter) throws UnsupportedExpressionException {
 		Vector<String> params = new Vector();
-		
+
 		StringBuffer param = new StringBuffer();
 		int count = 0;
 		for (int scan = 0; scan < parameter.length(); scan++) {
 			char c = parameter.charAt(scan);
-			
+
 			if(c == ',') {
 				if(count > 0) {
 					param.append(c);
@@ -406,47 +404,47 @@ public class ExpLParser extends BaseParser {
 				param.append(c);
 			}
 		}
-		
+
 		if(count > 0) {
 			UnsupportedExpressionException e = new UnsupportedExpressionException("Missing '}'.");
 			e.push(parameter);
 			throw e;
 		}
-		
+
 		String lastParam = param.toString();
-		
+
 		if(params.size() == 0 && lastParam.equals("")) {
 			// '()' only, mean no parameter
 		} else {
 			params.add(lastParam);
 		}
-		
+
 		return params.toArray(new String[] {});
 	}
-	
+
 	/**
 	 * Split the expression, get the first expression in brace.
 	 * @return  return an array, length is 3. for example: abc{def}ghi, then return {abc, def, ghi}.
 	 *          this array never return null, instead of blank.
 	 */
 	private static String[] splitExpression(String express) throws UnsupportedExpressionException {
-		
+
 		if(express == null) {
 			UnsupportedExpressionException e = new UnsupportedExpressionException("Expression is null.");
 			throw e;
 		}
-		
+
 		StringBuffer one = new StringBuffer();
 		StringBuffer two = new StringBuffer();
 		StringBuffer three = new StringBuffer();
-		
+
 		if (express.indexOf('{') == -1)	one.append(express);
 		else {
 			int count = 0;
 			int scan = 0;
 			for (; scan < express.length(); scan++) {
 				char c = express.charAt(scan);
-				
+
 				if(c == '{') {
 					count++;
 					two.append(c);
@@ -469,28 +467,28 @@ public class ExpLParser extends BaseParser {
 						one.append(c);
 					}
 				}
-			
+
 			}
-			
+
 			if(count > 0) {
 				UnsupportedExpressionException e = new UnsupportedExpressionException("Missing '}'.");
 				e.push(express);
 				throw e;
 			}
-			
+
 			if(scan < express.length()) {
 				for (; scan < express.length(); scan++) {
 					three.append(express.charAt(scan));
 				}
 			}
 		}
-		
+
 		return new String[] { one.toString(), two.toString(), three.toString() };
 	}
-	
+
 	// Main method
 	public static void main(String[] args) {
-		
+
 		// test splitExpression
 		/*
 		try {
@@ -541,23 +539,23 @@ public class ExpLParser extends BaseParser {
 		}
 		System.exit(-1);
 		*/
-		
+
 		Environment env = new Environment();
-		
+
 		while(true) {
 			String express = javax.swing.JOptionPane.showInputDialog(null, "Expression: ", "EXPL", JOptionPane.PLAIN_MESSAGE);
-			
+
 			if(express == null) break;
-			
+
 			try {
 				System.out.println(env.parse(express));
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		env.callback();
-		
+
 	}
 
 
