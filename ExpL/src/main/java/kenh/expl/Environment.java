@@ -21,8 +21,8 @@ package kenh.expl;
 
 import kenh.expl.impl.ExpLParser;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.*;
 
@@ -58,14 +58,14 @@ public class Environment implements Callback {
 	/**
 	 * Logger
 	 */
-	private Logger logger = LogManager.getLogger(Environment.class);
+	private Log logger = LogFactory.getLog(Environment.class);
 	
 	
 	/**
 	 * Constructor
 	 */
 	public Environment() {
-		this(null);
+		this(null, null);
 	}
 	
 	/**
@@ -81,7 +81,7 @@ public class Environment implements Callback {
 	 * @param parser
 	 * @param logger
 	 */
-	public Environment(Parser parser, Logger logger) {
+	public Environment(Parser parser, Log logger) {
 		if(parser == null) parser = new ExpLParser();
 		if(logger != null) this.logger = logger;
 
@@ -97,9 +97,17 @@ public class Environment implements Callback {
 	 * Get logger
 	 * @return
 	 */
-	public Logger getLogger() {
+	public Log getLogger() {
 		return logger;
 	}
+
+	/**
+	 * set logger
+	 */
+	public void setLogger(Log logger) {
+		this.logger = logger;
+	}
+
 
 	/**
 	 * Set the parser, and the parser's environment will be set.

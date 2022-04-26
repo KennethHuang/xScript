@@ -31,8 +31,6 @@ import kenh.expl.UnsupportedExpressionException;
 import kenh.xscript.*;
 import kenh.xscript.annotation.*;
 import kenh.xscript.elements.Script;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Provide base function for all elements
@@ -59,8 +57,6 @@ public abstract class BaseElement implements Element {
 	 *
 	 */
 	private Vector<String[]> allAttributeAnnotation = null;
-
-	private Logger logger = LogManager.getLogger(BaseElement.class);
 
 	/**
 	 * Find attribute annotations for all process method
@@ -349,7 +345,6 @@ public abstract class BaseElement implements Element {
 	@Override
 	public void setEnvironment(Environment env) {
 		this.env = env;
-		if(env.getLogger() != null) this.logger = env.getLogger();
 	}
 
 	@Override
@@ -357,8 +352,8 @@ public abstract class BaseElement implements Element {
 		return env;
 	}
 
-	protected Logger getLogger() {
-		return logger;
+	protected Log getLogger() {
+		return env.getLogger();
 	}
 
 	/**
@@ -369,7 +364,7 @@ public abstract class BaseElement implements Element {
 	@Override
 	public int invoke() throws UnsupportedScriptException {
 
-		logger.debug("[XSCRIPT] " + getInfo());
+		getLogger().debug("[XSCRIPT] " + getInfo());
 
 		Annotation ignoreSuperClass = this.getClass().getAnnotation(IgnoreSuperClass.class);
 
@@ -398,7 +393,7 @@ public abstract class BaseElement implements Element {
 			if(annotations.length == 0) { // non-parameter method
 				if(attributes.size() == 0) find = true;
 				else {
-					logger.trace("[XSCRIPT] Failure(no parameter required): " + method.toGenericString());
+					getLogger().trace("[XSCRIPT] Failure(no parameter required): " + method.toGenericString());
 					find = false;
 				}
 			} else {
@@ -414,7 +409,7 @@ public abstract class BaseElement implements Element {
 					Class class2 = classes[i];
 
 					if(anns == null) {
-						logger.trace("[XSCRIPT] Failure(parameter without annotation): " + method.toGenericString());
+						getLogger().trace("[XSCRIPT] Failure(parameter without annotation): " + method.toGenericString());
 						find = false;
 						break;
 					}
@@ -432,12 +427,12 @@ public abstract class BaseElement implements Element {
 					}
 
 					if(StringUtils.isBlank(attributeName)) {
-						logger.trace("[XSCRIPT] Failure(annotation value is empty): " + method.toGenericString());
+						getLogger().trace("[XSCRIPT] Failure(annotation value is empty): " + method.toGenericString());
 						find = false;
 						break;
 					}
 					if(!attributes.containsKey(attributeName)) {
-						logger.trace("[XSCRIPT] Failure(can't find attribute[" + attributeName + "]): " + method.toGenericString());
+						getLogger().trace("[XSCRIPT] Failure(can't find attribute[" + attributeName + "]): " + method.toGenericString());
 						find = false;
 						break;
 					}
@@ -460,7 +455,7 @@ public abstract class BaseElement implements Element {
 						}
 
 					} catch(UnsupportedExpressionException e) {
-						logger.trace("[XSCRIPT] Failure(error[" + attributeName + ", " + e.getMessage() + "]): " + method.toGenericString());
+						getLogger().trace("[XSCRIPT] Failure(error[" + attributeName + ", " + e.getMessage() + "]): " + method.toGenericString());
 						find = false;
 						//break;
 						parsedAttributes.clear();
@@ -475,21 +470,21 @@ public abstract class BaseElement implements Element {
 						try {
 							Object obj = Environment.convert((String)attrValue, class2);
 							if(obj == null) {
-								logger.trace("[XSCRIPT] Failure(Convert failure[" + attributeName + ", null]): " + method.toGenericString());
+								getLogger().trace("[XSCRIPT] Failure(Convert failure[" + attributeName + ", null]): " + method.toGenericString());
 								find = false;
 								break;
 							} else {
 								objs[i] = obj;
 							}
 						} catch(Exception e) {
-							logger.trace("[XSCRIPT] Failure(Convert exception[" + attributeName + "]): " + method.toGenericString());
+							getLogger().trace("[XSCRIPT] Failure(Convert exception[" + attributeName + "]): " + method.toGenericString());
 							find = false;
 							break;
 							//UnsupportedScriptException ex = new UnsupportedScriptException(this, e);
 							//throw ex;
 						}
 					} else {
-						logger.trace("[XSCRIPT] Failure(Unsupported class[" + attributeName + ", " + class1 + ", " + class2 + "]): " + method.toGenericString());
+						getLogger().trace("[XSCRIPT] Failure(Unsupported class[" + attributeName + ", " + class1 + ", " + class2 + "]): " + method.toGenericString());
 						find = false;
 						break;
 					}
@@ -499,7 +494,7 @@ public abstract class BaseElement implements Element {
 			if(find) {
 				parsedAttributes.clear();
 				try {
-					logger.trace("[XSCRIPT] Invoke: " + method.toGenericString());
+					getLogger().trace("[XSCRIPT] Invoke: " + method.toGenericString());
 					if( method.getReturnType() == int.class ) {
 						return (Integer)method.invoke(this, objs);
 					} else if (  method.getReturnType() == Integer.class ) {

@@ -24,8 +24,7 @@ import kenh.expl.Function;
 import kenh.expl.Processing;
 import kenh.expl.UnsupportedExpressionException;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -42,12 +41,10 @@ import java.lang.reflect.Method;
 public abstract class BaseFunction implements Function {
 	
 	private Environment env = null;
-	private Logger logger = LogManager.getLogger(BaseFunction.class);
-	
+
 	@Override
 	public void setEnvironment(Environment env) {
 		this.env = env;
-		if(env.getLogger() != null) this.logger = env.getLogger();
 	}
 	
 	@Override
@@ -55,8 +52,8 @@ public abstract class BaseFunction implements Function {
 		return env;
 	}
 
-	protected Logger getLogger() {
-		return logger;
+	protected Log getLogger() {
+		return env.getLogger();
 	}
 
 	/**
@@ -77,8 +74,8 @@ public abstract class BaseFunction implements Function {
 			Annotation a = method.getAnnotation(Processing.class);
 			
 			if((name.equals(METHOD) || a != null) && params.length == classes.length) {
-				
-				logger.trace("[EXPL] Method: " + method.toGenericString());
+
+				getLogger().trace("[EXPL] Method: " + method.toGenericString());
 				boolean find = true;
 				Object[] objs = new Object[params.length];
 				for(int i=0; i< params.length; i++) {
@@ -92,21 +89,21 @@ public abstract class BaseFunction implements Function {
 						try {
 							Object obj = Environment.convert((String)params[i], class2);
 							if(obj == null) {
-								logger.trace("[EXPL] Failure(Convert failure[" + (i+1) + "-" + class1 + "," + class2 + "]): " + method.toGenericString());
+								getLogger().trace("[EXPL] Failure(Convert failure[" + (i+1) + "-" + class1 + "," + class2 + "]): " + method.toGenericString());
 								find = false;
 								break;
 							} else {
 								objs[i] = obj;
 							}
 						} catch(Exception e) {
-							logger.trace("[EXPL] Failure(Convert exception[" + (i+1) + "-" + e.getMessage() + "]): " + method.toGenericString());
+							getLogger().trace("[EXPL] Failure(Convert exception[" + (i+1) + "-" + e.getMessage() + "]): " + method.toGenericString());
 							find = false;
 							break;
 							//UnsupportedExpressionException ex = new UnsupportedExpressionException(e);
 							//throw ex;
 						}
 					} else {
-						logger.trace("[EXPL] Failure(Class unmatched[" + (i+1) + "]): " + method.toGenericString());
+						getLogger().trace("[EXPL] Failure(Class unmatched[" + (i+1) + "]): " + method.toGenericString());
 						find = false;
 						break;
 					}

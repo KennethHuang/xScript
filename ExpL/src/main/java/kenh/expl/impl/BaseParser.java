@@ -22,8 +22,7 @@ package kenh.expl.impl;
 import kenh.expl.Environment;
 import kenh.expl.Parser;
 import kenh.expl.UnsupportedExpressionException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
 
 /**
  * Provide the base method for sub parser.
@@ -35,12 +34,10 @@ import org.apache.logging.log4j.Logger;
 public abstract class BaseParser implements Parser {
 	
 	private Environment env = null;
-	private Logger logger = LogManager.getLogger(BaseParser.class);
-	
+
 	@Override
 	public void setEnvironment(Environment env) {
 		this.env = env;
-		if(env.getLogger() != null) this.logger = env.getLogger();
 	}
 
 	@Override
@@ -48,8 +45,8 @@ public abstract class BaseParser implements Parser {
 		return env;
 	}
 
-	protected Logger getLogger() {
-		return logger;
+	protected Log getLogger() {
+		return env.getLogger();
 	}
 
 	/**

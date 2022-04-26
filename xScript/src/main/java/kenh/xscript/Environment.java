@@ -23,7 +23,8 @@ import java.util.*;
 
 import kenh.expl.Parser;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  * The subclass of ExpL's environment, to support xScript.
@@ -67,7 +68,7 @@ public class Environment extends kenh.expl.Environment {
 	 * Constructor
 	 */
 	public Environment() {
-		this(null);
+		this(null, null);
 	}
 
 	/**
@@ -83,8 +84,11 @@ public class Environment extends kenh.expl.Environment {
 	 * @param parser
 	 * @param logger
 	 */
-	public Environment(Parser parser, Logger logger) {
+	public Environment(Parser parser, Log logger) {
 		super(parser, logger);
+		if(logger == null) {
+			this.setLogger(LogFactory.getLog(Environment.class));
+		}
 
 		setElementPackage("xScript", "kenh.xscript.elements"); // the base package for elements
 		setFunctionPackage("xScript", "kenh.xscript.functions"); // the function package of xScript
