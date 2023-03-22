@@ -11,6 +11,6 @@ import java.util.Map;
  */
 public interface Writer {
 	
-	public void write(Object obj, Map<String, Object> attributes) throws Exception;
+	void write(Object obj, Map<String, Object> attributes) throws Exception;
 	
 }

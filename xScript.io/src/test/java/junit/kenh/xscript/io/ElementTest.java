@@ -1,19 +1,14 @@
 package junit.kenh.xscript.io;
 
-import java.util.Arrays;
-
 import kenh.xscript.Element;
 import kenh.xscript.ScriptUtils;
-
-import org.apache.commons.lang3.StringUtils;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.FixMethodOrder;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExternalResource;
 import org.junit.runners.MethodSorters;
 import org.w3c.dom.Document;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ElementTest {
@@ -21,7 +16,9 @@ public class ElementTest {
 	private static long curr = (new java.util.Date()).getTime();	
 	
 	private static kenh.xscript.Environment env = null;
-	
+	private static Date date = new Date();
+	private static SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 	@After
 	public void afterEachTest() {
 		if(env != null) env.callback();
@@ -33,17 +30,22 @@ public class ElementTest {
 		@Override
 		protected void before() throws Throwable {
 			env = new kenh.xscript.Environment(new kenh.expl.impl.ExpLParser());
-			
-			String content = 
+
+			String content =
 					"<script xmlns:i=\"kenh.xscript.io.elements\">" + 
 					"	<i:excel var=\"test_xls\" file=\"K_" + curr + "\\test.xls\"/>" + 
 					"	<i:text var=\"test_txt\" file=\"K_" + curr + "\\test.txt\"/>" + 
 					"	<method name=\"main\">" + 
 					"		<set var=\"name\" value=\"KENH\"/>" + 
-					"		<i:write ref=\"test_xls\" sheet=\"sheet2\" row=\"2\" col=\"2\">ABCDEFG</i:write>" + 
-					"		<i:write ref=\"test_xls\" sheet=\"sheet3\" row=\"3\" col=\"3\">{name}</i:write>" + 
-					"		<i:write ref=\"test_xls\" sheet=\"sheet3\" row=\"3\" col=\"3\">--{name}</i:write>" + 
-					"		<for from=\"0\" to=\"10\">" + 
+					"		<i:write ref=\"test_xls\" sheet=\"sheet2\" row=\"2\" col=\"2\">ABCDEFG</i:write>" +
+					"		<i:write ref=\"test_xls\" sheet=\"sheet3\" row=\"3\" col=\"3\">{name}</i:write>" +
+					"		<i:write ref=\"test_xls\" sheet=\"sheet3\" row=\"3\" col=\"3\">--{name}</i:write>" +
+					"		<i:write ref=\"test_xls\" sheet=\"sheet5\" row=\"0\" col=\"0\">{dateField}</i:write>" +
+					"		<i:write ref=\"test_xls\" sheet=\"sheet5\" row=\"0\" col=\"1\">{booleanField}</i:write>" +
+					"		<i:write ref=\"test_xls\" sheet=\"sheet5\" row=\"0\" col=\"2\">{floatField}</i:write>" +
+					"		<i:write ref=\"test_xls\" sheet=\"sheet5\" row=\"0\" col=\"3\">{doubleField}</i:write>" +
+					"		<i:write ref=\"test_xls\" sheet=\"sheet5\" row=\"0\" col=\"4\" value=\"{intField}\"/>" +
+					"		<for from=\"0\" to=\"10\">" +
 					"			<i:write ref=\"test_xls\" sheet=\"sheet1\" row=\"0\" col=\"{___index___}\">X{___index___}</i:write>" + 
 					"		</for>" + 
 					"		<for from=\"0\" to=\"10\">" + 
@@ -79,7 +81,12 @@ public class ElementTest {
 					"		<i:write ref=\"test_txt\" opt=\"n\">{bbb}</i:write>" + 
 					"	</method>" + 
 					"</script>";
-			
+
+			env.setVariable("dateField", date);
+			env.setVariable("booleanField", true);
+			env.setVariable("floatField", 1.155f);
+			env.setVariable("doubleField", 1.15555555d);
+			env.setVariable("intField", new Integer(101));
 			Document doc = Main.stringToDocument(content);
 			Element e = ScriptUtils.getInstance(doc, env);
 			
@@ -91,7 +98,7 @@ public class ElementTest {
 	    @Override
 	    protected void after() {
 	    	env.callback();
-	    	
+
 	    	java.io.File demoFolder = new java.io.File("K_" + curr);
 	    	
 	    	java.io.File demo1 = new java.io.File("K_" + curr, "test.xls");
@@ -101,7 +108,7 @@ public class ElementTest {
 	    	demo2.delete();
 	    	
 	    	demoFolder.delete();
-	    	
+
 	    };
 	};
 	
@@ -113,34 +120,37 @@ public class ElementTest {
 				"	<i:excel var=\"final excel1\" file=\"K_" + curr + "\\test.xls\" read-only=\"true\"/>" +
 				"	<method name=\"main\">" + 
 				"		<i:excel var=\"excel2\" file=\"K_" + curr + "\\test.xls\" read-only=\"true\"/>" +
-				"		<for ref=\"{excel1.getSheet('sheet1')}\" sub-ref=\"row\">" + 
+				"		<for ref=\"{excel1.getSheet('sheet1')}\" sub-ref=\"row\">" +
 				"			<set var=\"A_{row[0]}\" value=\"{row[1]}\"/>" + 
 				"			<set var=\"A_{row[1]}\" value=\"{row[2]}\"/>" + 
-				"			<set var=\"A_{row[2]}\" value=\"{row[3]}\"/>" + 
-				"		</for>" + 
-				"		<for from=\"0\" to=\"{{excel1.getSheet('sheet1').getRowNum()-1}}\">" + 
+				"			<set var=\"A_{row[2]}\" value=\"{row[3]}\"/>" +
+				"		</for>" +
+				"		<for from=\"0\" to=\"{{excel1.getSheet('sheet1').getRowNum()-1}}\">" +
 				"			<set var=\"row\" value=\"{___index___}\"/>" +
-				"			<for from=\"0\" to=\"{{excel1.getSheet('sheet1').getColNum()-1}}\">" + 
+				"			<for from=\"0\" to=\"{{excel1.getSheet('sheet1').getColNum()-1}}\">" +
 				"				<set var=\"col\" value=\"{___index___}\"/>" +
 				"				<i:read ref=\"excel1\" sheet=\"sheet1\" row=\"{row}\" col=\"{col}\" var=\"B_{row}_{col}\"/>" + 
 				"			</for>" + 
 				"		</for>" + 
-				"		<i:read ref=\"excel2\" sheet=\"sheet2\" row=\"2\" col=\"2\" var=\"C1\"/>" + 
+				"		<i:read ref=\"excel2\" sheet=\"sheet2\" row=\"2\" col=\"2\" var=\"C1\"/>" +
 				"		<i:read ref=\"excel2\" sheet=\"sheet2\" row=\"3\" col=\"2\" var=\"C2\"/>" + 
-				"		<i:read ref=\"excel2\" sheet=\"sheet3\" row=\"3\" col=\"3\" var=\"C3\"/>" + 
-				"		<for ref=\"{excel2.getSheet('sheet4').cols()}\" sub-ref=\"col\">" + 
+				"		<i:read ref=\"excel2\" sheet=\"sheet3\" row=\"3\" col=\"3\" var=\"C3\"/>" +
+				"		<i:read ref=\"excel2\" sheet=\"sheet1\" row=\"1\" var=\"C4\"/>" +
+				"		<i:read ref=\"excel2\" sheet=\"sheet1\" col=\"2\" var=\"C5\"/>" +
+				"		<i:read ref=\"excel2\" sheet=\"sheet5\" row=\"0\" col=\"0\" var=\"C6\"/>" +
+				"		<for ref=\"{excel2.getSheet('sheet4').cols()}\" sub-ref=\"col\">" +
 				"			<set var=\"D_{___index___}_0\" value=\"{col[0]}\"/>" + 
 				"			<set var=\"D_{___index___}_1\" value=\"{col[1]}\"/>" + 
 				"			<set var=\"D_{___index___}_2\" value=\"{col[2]}\"/>" + 
 				"			<set var=\"D_{___index___}_3\" value=\"{col[3]}\"/>" + 
-				"		</for>" + 
+				"		</for>" +
 				"	</method>" + 
 				"</script>";
 		
 		Document doc = Main.stringToDocument(content);
 		Element e = ScriptUtils.getInstance(doc, env);
 		e.invoke();
-		
+
 		Assert.assertEquals("X1", env.getVariable("A_X0"));
 		Assert.assertEquals("X2", env.getVariable("A_X1"));
 		Assert.assertEquals("X3", env.getVariable("A_X2"));
@@ -150,7 +160,7 @@ public class ElementTest {
 		Assert.assertEquals("Z1", env.getVariable("A_Z0"));
 		Assert.assertEquals("Z2", env.getVariable("A_Z1"));
 		Assert.assertEquals("Z3", env.getVariable("A_Z2"));
-		
+
 		Assert.assertEquals("X0", env.getVariable("B_0_0"));
 		Assert.assertEquals("X1", env.getVariable("B_0_1"));
 		Assert.assertEquals("X2", env.getVariable("B_0_2"));
@@ -184,16 +194,24 @@ public class ElementTest {
 		Assert.assertEquals("Z8", env.getVariable("B_2_8"));
 		Assert.assertEquals("Z9", env.getVariable("B_2_9"));
 		Assert.assertEquals("Z10", env.getVariable("B_2_10"));
-		
+
 		Assert.assertEquals("ABCDEFG", env.getVariable("C1"));
 		Assert.assertEquals("Y1", env.getVariable("C2"));
 		Assert.assertEquals("--KENH", env.getVariable("C3"));
-		
+		Object[] objects = (Object[])env.getVariable("C4");
+		Assert.assertEquals("Y3", objects[3]);
+		Assert.assertEquals("Y6", objects[6]);
+		objects = (Object[])env.getVariable("C5");
+		Assert.assertEquals("X2", objects[0]);
+		Assert.assertEquals("Y2", objects[1]);
+		Date date_ = (Date)env.getVariable("C6");
+		Assert.assertEquals(dateTimeFormatter.format(date), dateTimeFormatter.format(date_));
+
 		Assert.assertEquals("a0", env.getVariable("D_1_3"));
 		Assert.assertEquals("b1", env.getVariable("D_2_2"));
 		Assert.assertEquals("c2", env.getVariable("D_3_1"));
 		Assert.assertEquals("d3", env.getVariable("D_4_0"));
-		
+
 	}
 		
 	@Test

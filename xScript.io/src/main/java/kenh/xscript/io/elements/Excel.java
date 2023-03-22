@@ -1,7 +1,5 @@
 package kenh.xscript.io.elements;
 
-import org.apache.commons.lang3.StringUtils;
-
 import kenh.xscript.annotation.*;
 import kenh.xscript.elements.*;
 import kenh.xscript.*;

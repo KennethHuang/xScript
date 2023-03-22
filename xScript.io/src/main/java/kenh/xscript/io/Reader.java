@@ -11,6 +11,6 @@ import java.util.Map;
  */
 public interface Reader {
 	
-	public Object read(Map<String, Object> attributes) throws Exception;
+	Object read(Map<String, Object> attributes) throws Exception;
 	
 }

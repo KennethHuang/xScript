@@ -1,121 +1,108 @@
 package kenh.xscript.io.wrap;
 
-import java.util.*;
-import java.util.regex.Pattern;
-
-import org.apache.commons.lang3.StringUtils;
-
-/*
-import org.apache.poi.ss.usermodel.AutoFilter;
+import kenh.xscript.io.Utils;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellRange;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Comment;
-import org.apache.poi.ss.usermodel.DataValidation;
-import org.apache.poi.ss.usermodel.DataValidationHelper;
-import org.apache.poi.ss.usermodel.Drawing;
-import org.apache.poi.ss.usermodel.Footer;
-import org.apache.poi.ss.usermodel.Header;
-import org.apache.poi.ss.usermodel.Hyperlink;
-import org.apache.poi.ss.usermodel.PrintSetup;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.SheetConditionalFormatting;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellAddress;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.PaneInformation;
-*/
 
+import java.util.*;
 
 /**
- * The wrapper class for org.apache.poi.ss.usermodel.Sheet
  * @author Kennethh
  *
  */
-public class Sheet implements Iterable<String[]> {
+public class Sheet implements Iterable<Object[]> {
 	
-	private jxl.Sheet sheet = null;
+	private org.apache.poi.ss.usermodel.Sheet sheet = null;
 	
-	public Sheet(jxl.Sheet sheet) {
+	public Sheet(org.apache.poi.ss.usermodel.Sheet sheet) {
 		this.sheet = sheet;
 	}
 	
 	public int getRowNum() {
-		return sheet.getRows();
+		return sheet.getLastRowNum() + 1;
 	}
 	
 	public int getColNum() {
-		return sheet.getColumns();
+		int maxColsNo = 0;
+		for(int i=0; i<= sheet.getLastRowNum(); i++) {
+			if(sheet.getRow(i)!=null) {
+				int curColsNo = sheet.getRow(i).getLastCellNum();
+				if(curColsNo > maxColsNo) maxColsNo = curColsNo;
+			}
+		}
+		return maxColsNo + 1;
 	}
 	
 	public String getName() {
-		return sheet.getName();
+		return sheet.getSheetName();
 	}
 	
-	@Override
-	public Iterator<String[]> iterator() {
+	public Iterator<Object[]> iterator() {
 		return new RIterator();
 	}
 	
-	public Iterable<String[]> cols() {
-		return (new Iterable<String[]>() {
-
-			@Override
-			public Iterator<String[]> iterator() {
+	public Iterable<Object[]> cols() {
+		return (new Iterable<Object[]>() {
+			public Iterator<Object[]> iterator() {
 				return new CIterator();
 			}
-			
 		});
 	}
 	
-	class CIterator implements Iterator<String[]> {
+	class CIterator implements Iterator<Object[]> {
 		
 		private int i = 0;
+		private int colNum = Sheet.this.getColNum();
 		
-		@Override
 		public boolean hasNext() {
-			return i < sheet.getColumns();
+			return i < colNum;
 		}
 
-		@Override
-		public String[] next() {
+		public Object[] next() {
 			int no = i++;
-			
-			Vector<String> v = new Vector();
-			for(int j=0; j< sheet.getRows(); j++) {
-				jxl.Cell c = sheet.getCell(no, j);
-				if(c == null) v.add("");
-				else v.add(c.getContents());
+
+			Vector vector = new Vector();
+			for(int j=0; j<= sheet.getLastRowNum(); j++) {
+				Row curRow = sheet.getRow(j);
+				if(curRow == null) vector.add("");
+				else {
+					Cell cell = curRow.getCell(no);
+					vector.add(Utils.getCellValue(cell, ""));
+				}
 			}
-			
-			return v.toArray(new String[] {});
+			return vector.toArray();
 		}
-		
+
+		public void remove() {
+			throw new UnsupportedOperationException("remove");
+		}
 	}
 
-	class RIterator implements Iterator<String[]> {
+	class RIterator implements Iterator<Object[]> {
 		
 		int i = 0;
 		
-		@Override
 		public boolean hasNext() {
-			return i < sheet.getRows();
+			return i < sheet.getLastRowNum() + 1;
 		}
 
-		@Override
-		public String[] next() {
+		public Object[] next() {
 			int no = i++;
-			
-			jxl.Cell[] cs = sheet.getRow(no);
-			if(cs == null) return new String[] {};
-			
-			Vector<String> v = new Vector();
-			for(jxl.Cell c: cs) {
-				v.add(c.getContents());
+
+			Vector vector = new Vector();
+			Row curRow = sheet.getRow(no);
+			if(curRow != null) {
+				for(int j=0; j<= curRow.getLastCellNum(); j++) {
+					Cell cell = curRow.getCell(j);
+					vector.add(Utils.getCellValue(cell, ""));
+				}
 			}
-			
-			return v.toArray(new String[] {});
+			return vector.toArray();
+		}
+
+		public void remove() {
+			throw new UnsupportedOperationException("remove");
 		}
 	}
 	

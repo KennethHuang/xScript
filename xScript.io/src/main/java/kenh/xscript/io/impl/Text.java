@@ -69,7 +69,6 @@ public class Text implements Reader, Writer, Callback, Iterable {
 	}
 	
 	
-	@Override
 	public void write(Object obj, Map<String, Object> attributes) throws IOException, UnsupportedOperationException {
 		if(this.isReadOnly) throw new UnsupportedOperationException("The file is read only.");
 		
@@ -114,8 +113,6 @@ public class Text implements Reader, Writer, Callback, Iterable {
 
 	}
 	
-	
-	@Override
 	public String read(Map<String, Object> attributes) throws IOException, UnsupportedOperationException {
 		if(attributes.containsKey(ATTRIBUTE_LINE)) {
 			if(attributes.size() > 1) {
@@ -156,8 +153,6 @@ public class Text implements Reader, Writer, Callback, Iterable {
 		return line;
 	}
 	
-	
-	@Override
 	public void callback() {
 		
 		if(this.isReadOnly) return;
@@ -171,7 +166,6 @@ public class Text implements Reader, Writer, Callback, Iterable {
 		context.clear();
 	}
 
-	@Override
 	public Iterator iterator() {
 		return context.iterator();
 	}

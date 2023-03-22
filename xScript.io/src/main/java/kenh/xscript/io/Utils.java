@@ -1,8 +1,10 @@
 package kenh.xscript.io;
 
+import java.text.SimpleDateFormat;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.*;
 
 public class Utils {
 	
@@ -44,6 +46,121 @@ public class Utils {
 		
 		return false;
 	}
-	
+
+	/**
+	 * Get certain cell in a sheet
+	 * @param workbook
+	 * @param sheetName
+	 * @param rowId
+	 * @param colId
+	 * @return
+	 */
+	public static Cell getCell(Workbook workbook, String sheetName, int rowId, int colId) {
+		return getCell(workbook, sheetName, rowId, colId, true);
+	}
+
+	/**
+	 * Get certain cell in a sheet
+	 * @param workbook
+	 * @param sheetName
+	 * @param rowId
+	 * @param colId
+	 * @param createNewCell
+	 * @return
+	 */
+	public static Cell getCell(Workbook workbook, String sheetName, int rowId, int colId, boolean createNewCell) {
+		org.apache.poi.ss.usermodel.Sheet sheet = null;
+		if(workbook.getSheet(sheetName) == null) {
+			if(StringUtils.isBlank(sheetName)) {
+				int i = 1;
+				while(workbook.getSheet("Sheet" + i) != null) { i++; }
+				sheet = workbook.createSheet("Sheet" + i);
+			} else {
+				sheet = workbook.createSheet(sheetName);
+			}
+		} else {
+			sheet = workbook.getSheet(sheetName);
+		}
+
+		Row row = sheet.getRow(rowId);
+		if(row == null) {
+			if(!createNewCell) return null;
+			row = sheet.createRow(rowId);
+		}
+		Cell cell = row.getCell(colId);
+		if(cell == null) {
+			if(!createNewCell) return null;
+			cell = row.createCell(colId);
+		}
+
+		return cell;
+	}
+
+	/**
+	 * Get certain cell in a sheet
+	 * @param workbook
+	 * @param sheetId
+	 * @param rowId
+	 * @param colId
+	 * @return
+	 */
+	public static Cell getCell(Workbook workbook, int sheetId, int rowId, int colId) {
+		return getCell(workbook, sheetId, rowId, colId, true);
+	}
+
+	/**
+	 * Get certain cell in a sheet
+	 * @param workbook
+	 * @param sheetId
+	 * @param rowId
+	 * @param colId
+	 * @param createNewCell
+	 * @return
+	 */
+	public static Cell getCell(Workbook workbook, int sheetId, int rowId, int colId, boolean createNewCell) {
+		int numberOfSheets = workbook.getNumberOfSheets();
+		Sheet sheet = null;
+		if(sheetId >= numberOfSheets) {
+			int i = sheetId + 1;
+			while(workbook.getSheet("Sheet" + i) != null) {i++;}
+			sheet = workbook.createSheet("Sheet" + i);
+		} else {
+			sheet = workbook.getSheetAt(sheetId);
+		}
+
+		Row row = sheet.getRow(rowId);
+		if(row == null) {
+			if(!createNewCell) return null;
+			row = sheet.createRow(rowId);
+		}
+		Cell cell = row.getCell(colId);
+		if(cell == null) {
+			if(!createNewCell) return null;
+			cell = row.createCell(colId);
+		}
+
+		return cell;
+	}
+
+	/**
+	 * get the value of cell
+	 * @param cell
+	 * @return
+	 */
+	public static Object getCellValue(Cell cell) {
+		return getCellValue(cell, null);
+	}
+	public static Object getCellValue(Cell cell, Object nullValue) {
+		if(cell == null) return nullValue;
+		if(cell.getCellType() == CellType.BOOLEAN) return cell.getBooleanCellValue();
+		if(cell.getCellType() == CellType.NUMERIC) {
+			if(DateUtil.isCellDateFormatted(cell)) {
+				return cell.getDateCellValue();
+			} else {
+				return cell.getNumericCellValue();
+			}
+		}
+		return cell.getStringCellValue();
+	};
 
 }

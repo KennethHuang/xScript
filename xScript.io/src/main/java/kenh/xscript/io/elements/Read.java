@@ -3,14 +3,11 @@ package kenh.xscript.io.elements;
 import org.apache.commons.lang3.StringUtils;
 
 import kenh.expl.UnsupportedExpressionException;
-import kenh.xscript.annotation.*;
 import kenh.xscript.annotation.Text;
 import kenh.xscript.impl.NoChildElement;
 import kenh.xscript.*;
 import kenh.xscript.io.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 /**
