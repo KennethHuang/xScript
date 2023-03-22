@@ -91,6 +91,7 @@ public class Environment extends kenh.expl.Environment {
 		}
 
 		setElementPackage("xScript", "kenh.xscript.elements"); // the base package for elements
+		setElementPackage("xScriptLog", "kenh.xscript.elements.log"); // the base package for elements
 		setFunctionPackage("xScript", "kenh.xscript.functions"); // the function package of xScript
 
 		loadElementPackages_SystemProperties();
