@@ -147,17 +147,21 @@ public class Utils {
 	 * @param cell
 	 * @return
 	 */
+	private static DataFormatter dataFormatter = new DataFormatter();
 	public static Object getCellValue(Cell cell) {
 		return getCellValue(cell, null);
 	}
 	public static Object getCellValue(Cell cell, Object nullValue) {
 		if(cell == null) return nullValue;
-		if(cell.getCellType() == CellType.BOOLEAN) return cell.getBooleanCellValue();
+		if(cell.getCellType() == CellType.BOOLEAN) {
+			if(cell.getBooleanCellValue()) return "true";
+			else return "false";
+		}
 		if(cell.getCellType() == CellType.NUMERIC) {
 			if(DateUtil.isCellDateFormatted(cell)) {
 				return cell.getDateCellValue();
 			} else {
-				return cell.getNumericCellValue();
+				return dataFormatter.formatCellValue(cell);
 			}
 		}
 		return cell.getStringCellValue();
