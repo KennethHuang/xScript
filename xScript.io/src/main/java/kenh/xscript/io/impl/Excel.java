@@ -25,6 +25,7 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 	private static final String ATTRIBUTE_SHEET = "sheet";
 	private static final String ATTRIBUTE_ROW = "row";	// start from 0
 	private static final String ATTRIBUTE_COL = "col";	// start from 0
+	private static final String ATTRIBUTE_NUMBERIC = "numeric";	// only for reading numeric field
 
 	private Workbook wb = null;
 
@@ -172,6 +173,7 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 		String sheetName = null;
 		int row = -1;
 		int col = -1;
+		boolean numeric = false;
 		
 		Set<String> keys = attributes.keySet();
 		for(String key: keys) {
@@ -202,6 +204,8 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 				}
 				if(col < 0) throw new UnsupportedOperationException("Wrong value for attribute. [" + ATTRIBUTE_COL + "]");
 				
+			} else if(StringUtils.equals(key, ATTRIBUTE_NUMBERIC)) {
+				numeric = true;
 			} else {
 				throw new UnsupportedOperationException("Unknown attribute. [" + key + "]");
 			}
@@ -231,7 +235,7 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 			Object[] objects = new Object[curRow.getLastCellNum() + 1];
 			for(int i=0; i< objects.length; i++) {
 				Cell cell = curRow.getCell(i);
-				objects[i] = Utils.getCellValue(cell, "");
+				objects[i] = Utils.getCellValue(cell, "", numeric);
 			}
 			return objects;
 		}
@@ -244,7 +248,7 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 				else if(col > curRow.getLastCellNum()) objects[i] = null;
 				else {
 					Cell cell = curRow.getCell(col);
-					objects[i] = Utils.getCellValue(cell, "");
+					objects[i] = Utils.getCellValue(cell, "", numeric);
 				}
 			}
 			return objects;

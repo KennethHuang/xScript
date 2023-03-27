@@ -149,9 +149,12 @@ public class Utils {
 	 */
 	private static DataFormatter dataFormatter = new DataFormatter();
 	public static Object getCellValue(Cell cell) {
-		return getCellValue(cell, null);
+		return getCellValue(cell, null, false);
 	}
 	public static Object getCellValue(Cell cell, Object nullValue) {
+		return getCellValue(cell, null, false);
+	}
+	public static Object getCellValue(Cell cell, Object nullValue, boolean numeric) {
 		if(cell == null) return nullValue;
 		if(cell.getCellType() == CellType.BOOLEAN) {
 			if(cell.getBooleanCellValue()) return "true";
@@ -160,6 +163,8 @@ public class Utils {
 		if(cell.getCellType() == CellType.NUMERIC) {
 			if(DateUtil.isCellDateFormatted(cell)) {
 				return cell.getDateCellValue();
+			} else if(numeric) {
+				return cell.getNumericCellValue();
 			} else {
 				return dataFormatter.formatCellValue(cell);
 			}

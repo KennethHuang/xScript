@@ -67,7 +67,7 @@
         <dependency>
             <groupId>kenh.xscript.io</groupId>
             <artifactId>xScript.io</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
         <dependency>
