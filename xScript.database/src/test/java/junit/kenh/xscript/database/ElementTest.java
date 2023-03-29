@@ -41,16 +41,8 @@ public class ElementTest {
 				"        xmlns:f.d=\"kenh.xscript.database.functions\" " +
 				"        xmlns:f.t=\"junit.kenh.xscript.database.functions\">" + 
 				"	<set var=\"conn\" value=\"{#t:getConnection(5)}\"/>" +
-				"	<d:datasource var=\"localdb\">" + 
-				"		<param name=\"driverClassName\" value=\"org.hsqldb.jdbcDriver\"/>" +
-				"		<param name=\"url\" value=\"jdbc:hsqldb:hsql://localhost/xdb\"/>" +
-				"		<param name=\"username\" value=\"sa\"/>" +
-				"		<param name=\"password\" value=\"\"/>" +
-				"	</d:datasource>" +
 				"	<method name=\"main\">" +
-				"		<d:connection var=\"conn1\" source=\"localdb\"/>" +
-				"		<set var=\"public count1\" value=\"{#d:getInt(localdb,select count(*) from " + GetConnection.TABLE_NAME + ")}\"/>" +
-				"		<set var=\"public count2\" value=\"{#d:getInt(conn1,select count(*) from " + GetConnection.TABLE_NAME + ")}\"/>" +
+				"		<set var=\"public count2\" value=\"{#d:getInt(conn,select count(*) from " + GetConnection.TABLE_NAME + ")}\"/>" +
 				"	</method>" +
 				"</script>";
 		
@@ -59,7 +51,6 @@ public class ElementTest {
 		
 		e.invoke();
 		
-		Assert.assertEquals("5", e.getEnvironment().getVariable("count1"));
 		Assert.assertEquals("5", e.getEnvironment().getVariable("count2"));
 	}
 	

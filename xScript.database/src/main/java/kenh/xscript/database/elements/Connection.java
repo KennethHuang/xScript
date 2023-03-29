@@ -19,21 +19,16 @@
 
 package kenh.xscript.database.elements;
 
-import org.apache.commons.dbcp2.BasicDataSourceFactory;
+import kenh.xscript.Element;
+import kenh.xscript.UnsupportedScriptException;
+import kenh.xscript.annotation.Attribute;
+import kenh.xscript.annotation.Exclude;
+import kenh.xscript.annotation.IgnoreSuperClass;
+import kenh.xscript.elements.Set;
 import org.apache.commons.lang3.StringUtils;
 
-import kenh.expl.Callback;
-import kenh.xscript.annotation.*;
-import kenh.xscript.*;
-
-import java.util.*;
-import java.util.concurrent.Executor;
-
-import javax.sql.*;
-
-import java.sql.*;
-
-import kenh.xscript.elements.Set;
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 
 /**

@@ -1,44 +1,31 @@
 package junit.kenh.xscript.database.functions;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Properties;
-import java.util.Date;
-
-import javax.sql.DataSource;
-
 import kenh.expl.UnsupportedExpressionException;
 import kenh.expl.impl.BaseFunction;
 
-import org.apache.commons.dbcp2.BasicDataSourceFactory;
-import org.apache.commons.lang3.StringUtils;
+import java.sql.*;
+import java.util.Date;
+import java.util.Properties;
 
 public class GetConnection extends BaseFunction {
 
-	public static DataSource localDB = null;
+	public static Properties LOCAL = new Properties();
 	
 	static {
-		Properties LOCAL = new Properties();
 		LOCAL.put("driverClassName", "org.hsqldb.jdbcDriver");
 		LOCAL.put("url", "jdbc:hsqldb:hsql://localhost/xdb");
-		LOCAL.put("username", "sa");
+		LOCAL.put("user", "sa");
 		LOCAL.put("password", "");
-		try {
-			localDB = BasicDataSourceFactory.createDataSource(LOCAL);
-		} catch(Exception e) {
-			localDB = null;
-		}
-		
 	}
 	
 	public static final String TABLE_NAME = "TEST_TABLE_KENH_XSCRIPT_DATABASE";
 
 	public Connection process() throws UnsupportedExpressionException {
-		
+
 		try {
-			return new kenh.xscript.database.wrap.Connection(localDB.getConnection());
+			String url = LOCAL.getProperty("url");
+			Connection conn = DriverManager.getConnection(url, LOCAL);
+			return new kenh.xscript.database.wrap.Connection(conn);
 		} catch(SQLException e) {
 			throw new UnsupportedExpressionException(e);
 		}
