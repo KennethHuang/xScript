@@ -43,6 +43,7 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 
 		if(append) {
 			FileInputStream inputStream = null;
+			boolean secondTry = false;
 			try {
 				inputStream = new FileInputStream(file);
 				if (StringUtils.endsWith(fileName, ".xls")) {
@@ -50,8 +51,22 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 				} else {
 					wb = new XSSFWorkbook(inputStream);
 				}
+			} catch (Exception e) {
+				secondTry = true;
 			} finally {
 				if(inputStream != null) inputStream.close();
+			}
+			if(secondTry) { // use different workbook to load file
+				try {
+					inputStream = new FileInputStream(file);
+					if (StringUtils.endsWith(fileName, ".xls")) {
+						wb = new XSSFWorkbook(inputStream);
+					} else {
+						wb = new HSSFWorkbook(inputStream);
+					}
+				} finally {
+					if(inputStream != null) inputStream.close();
+				}
 			}
 
 		} else {

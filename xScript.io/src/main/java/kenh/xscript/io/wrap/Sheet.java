@@ -2,10 +2,10 @@ package kenh.xscript.io.wrap;
 
 import kenh.xscript.io.Utils;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * @author Kennethh
@@ -18,7 +18,11 @@ public class Sheet implements Iterable<Object[]> {
 	public Sheet(org.apache.poi.ss.usermodel.Sheet sheet) {
 		this.sheet = sheet;
 	}
-	
+
+	protected org.apache.poi.ss.usermodel.Sheet getSheet() {
+		return sheet;
+	}
+
 	public int getRowNum() {
 		return sheet.getLastRowNum() + 1;
 	}
