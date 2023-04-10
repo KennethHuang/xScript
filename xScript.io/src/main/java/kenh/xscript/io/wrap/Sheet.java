@@ -19,8 +19,38 @@ public class Sheet implements Iterable<Object[]> {
 		this.sheet = sheet;
 	}
 
-	protected org.apache.poi.ss.usermodel.Sheet getSheet() {
-		return sheet;
+	public Object[] getRow(int r) {
+		Vector vector = new Vector();
+
+		if(sheet != null) {
+			Row row = sheet.getRow(r);
+			if(row != null) {
+				for(int i=0; i<= row.getLastCellNum(); i++) {
+					vector.add(Utils.getCellValue(row.getCell(i), ""));
+				}
+			}
+		}
+
+		return vector.toArray(new Object[0]);
+	}
+
+	public Object[] getCol(int c) {
+		Vector vector = new Vector();
+
+		if(sheet != null) {
+			for(int i=0; i<= sheet.getLastRowNum(); i++) {
+				Row row = sheet.getRow(i);
+				if(row == null) {
+					vector.add("");
+				} else if(c > row.getLastCellNum()) {
+					vector.add("");
+				} else {
+					vector.add(Utils.getCellValue(row.getCell(c), ""));
+				}
+			}
+		}
+
+		return vector.toArray(new Object[0]);
 	}
 
 	public int getRowNum() {

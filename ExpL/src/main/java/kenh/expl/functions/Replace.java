@@ -33,7 +33,11 @@ import kenh.expl.impl.BaseFunction;
  *
  */
 public class Replace extends BaseFunction {
-	
+
+	public String process(String text) {
+		return StringUtils.replace(text, " ", "");
+	}
+
 	public String process(String text, String searchString) {
 		return StringUtils.replace(text, searchString, "");
 	}
