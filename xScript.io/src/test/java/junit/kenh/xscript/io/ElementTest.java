@@ -33,7 +33,7 @@ public class ElementTest {
 
 			String content =
 					"<script xmlns:i=\"kenh.xscript.io.elements\">" + 
-					"	<i:excel var=\"test_xls\" file=\"K_" + curr + "\\test.xls\"/>" + 
+					"	<i:excel var=\"test_xls\" file=\"K_" + curr + "\\test.xlsx\"/>" +
 					"	<i:text var=\"test_txt\" file=\"K_" + curr + "\\test.txt\"/>" + 
 					"	<method name=\"main\">" + 
 					"		<set var=\"name\" value=\"KENH\"/>" + 
@@ -101,7 +101,7 @@ public class ElementTest {
 
 	    	java.io.File demoFolder = new java.io.File("K_" + curr);
 	    	
-	    	java.io.File demo1 = new java.io.File("K_" + curr, "test.xls");
+	    	java.io.File demo1 = new java.io.File("K_" + curr, "test.xlsx");
 	    	demo1.delete();
 	    	
 	    	java.io.File demo2 = new java.io.File("K_" + curr, "test.txt");
@@ -117,9 +117,9 @@ public class ElementTest {
 		
 		String content = 
 				"<script xmlns:i=\"kenh.xscript.io.elements\">" + 
-				"	<i:excel var=\"final excel1\" file=\"K_" + curr + "\\test.xls\" read-only=\"true\"/>" +
+				"	<i:excel var=\"final excel1\" file=\"K_" + curr + "\\test.xlsx\" read-only=\"true\"/>" +
 				"	<method name=\"main\">" + 
-				"		<i:excel var=\"excel2\" file=\"K_" + curr + "\\test.xls\" read-only=\"true\"/>" +
+				"		<i:excel var=\"excel2\" file=\"K_" + curr + "\\test.xlsx\" read-only=\"true\"/>" +
 				"		<for ref=\"{excel1.getSheet('sheet1')}\" sub-ref=\"row\">" +
 				"			<set var=\"A_{row[0]}\" value=\"{row[1]}\"/>" + 
 				"			<set var=\"A_{row[1]}\" value=\"{row[2]}\"/>" + 
