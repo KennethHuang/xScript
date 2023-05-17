@@ -149,10 +149,15 @@ public class Utils {
 	 */
 	private static DataFormatter dataFormatter = new DataFormatter();
 	public static Object getCellValue(Cell cell) {
-		return getCellValue(cell, null, false);
+		return getCellValue(cell, null);
 	}
 	public static Object getCellValue(Cell cell, Object nullValue) {
-		return getCellValue(cell, null, false);
+		String value = System.getProperty("XSCRIPT.NUMERIC");
+		if(StringUtils.equalsAnyIgnoreCase(value, "Y", "yes")) {
+			return getCellValue(cell, null, true);
+		} else {
+			return getCellValue(cell, null, false);
+		}
 	}
 	public static Object getCellValue(Cell cell, Object nullValue, boolean numeric) {
 		if(cell == null) return nullValue;
