@@ -25,9 +25,10 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 	private static final String ATTRIBUTE_SHEET = "sheet";
 	private static final String ATTRIBUTE_ROW = "row";	// start from 0
 	private static final String ATTRIBUTE_COL = "col";	// start from 0
-	private static final String ATTRIBUTE_NUMBERIC = "numeric";	// only for reading numeric field
+	private static final String ATTRIBUTE_NUMBERIC = "numeric";	// only for reading numeric field, to ignore dollar sign
 
 	private Workbook wb = null;
+	private FormulaEvaluator evaluator = null;
 
 	private boolean isReadOnly = false;
 	private File file = null;
@@ -80,6 +81,8 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 			}
 		}
 
+		evaluator = wb.getCreationHelper().createFormulaEvaluator();
+
 	}
 	
 	public kenh.xscript.io.wrap.Sheet getSheet() {
@@ -89,19 +92,19 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 	public kenh.xscript.io.wrap.Sheet getSheet(int index) {
 		org.apache.poi.ss.usermodel.Sheet s = wb.getSheetAt(index);
 		if(s == null) return null;
-		else return new kenh.xscript.io.wrap.Sheet(s);
+		else return new kenh.xscript.io.wrap.Sheet(s, evaluator);
 	}
 	
 	public kenh.xscript.io.wrap.Sheet getSheet(String sheet) {
 		org.apache.poi.ss.usermodel.Sheet s = wb.getSheet(sheet);
 		if(s == null) return null;
-		else return new kenh.xscript.io.wrap.Sheet(s);
+		else return new kenh.xscript.io.wrap.Sheet(s, evaluator);
 	}
 	
 	public kenh.xscript.io.wrap.Sheet[] getSheets() {
 		Vector<kenh.xscript.io.wrap.Sheet> v = new Vector();
 		for (int i = 0; i < wb.getNumberOfSheets(); i++) {
-			v.add(new kenh.xscript.io.wrap.Sheet(wb.getSheetAt(i)));
+			v.add(new kenh.xscript.io.wrap.Sheet(wb.getSheetAt(i), evaluator));
 		}
 		return v.toArray(new kenh.xscript.io.wrap.Sheet[] {});
 	}
@@ -241,7 +244,7 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 
 		if(row >= 0 && col >= 0) {
 			Cell cell = Utils.getCell(wb, sheetName, row, col, false);
-			return Utils.getCellValue(cell);
+			return Utils.getCellValue(cell, evaluator);
 		}
 
 		if(row >= 0 && col < 0) {
@@ -250,7 +253,7 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 			Object[] objects = new Object[curRow.getLastCellNum() + 1];
 			for(int i=0; i< objects.length; i++) {
 				Cell cell = curRow.getCell(i);
-				objects[i] = Utils.getCellValue(cell, "", numeric);
+				objects[i] = Utils.getCellValue(cell, "", numeric, evaluator);
 			}
 			return objects;
 		}
@@ -263,7 +266,7 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 				else if(col > curRow.getLastCellNum()) objects[i] = null;
 				else {
 					Cell cell = curRow.getCell(col);
-					objects[i] = Utils.getCellValue(cell, "", numeric);
+					objects[i] = Utils.getCellValue(cell, "", numeric, evaluator);
 				}
 			}
 			return objects;
@@ -291,6 +294,8 @@ public class Excel implements Reader, Writer, Callback, Iterable {
 		} finally {
 			if(wb != null) try { wb.close(); } catch(Exception e_) {}
 		}
+
+		evaluator = null;
 	}
 
 	public Iterator iterator() {
