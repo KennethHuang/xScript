@@ -2,6 +2,7 @@ package kenh.xscript.io.wrap;
 
 import kenh.xscript.io.Utils;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.util.Iterator;
@@ -14,9 +15,11 @@ import java.util.Vector;
 public class Sheet implements Iterable<Object[]> {
 	
 	private org.apache.poi.ss.usermodel.Sheet sheet = null;
-	
-	public Sheet(org.apache.poi.ss.usermodel.Sheet sheet) {
+	private FormulaEvaluator evaluator = null;
+
+	public Sheet(org.apache.poi.ss.usermodel.Sheet sheet, FormulaEvaluator evaluator) {
 		this.sheet = sheet;
+		this.evaluator = evaluator;
 	}
 
 	public Object[] getRow(int r) {
@@ -26,7 +29,7 @@ public class Sheet implements Iterable<Object[]> {
 			Row row = sheet.getRow(r);
 			if(row != null) {
 				for(int i=0; i<= row.getLastCellNum(); i++) {
-					vector.add(Utils.getCellValue(row.getCell(i), ""));
+					vector.add(Utils.getCellValue(row.getCell(i), "", evaluator));
 				}
 			}
 		}
@@ -45,7 +48,7 @@ public class Sheet implements Iterable<Object[]> {
 				} else if(c > row.getLastCellNum()) {
 					vector.add("");
 				} else {
-					vector.add(Utils.getCellValue(row.getCell(c), ""));
+					vector.add(Utils.getCellValue(row.getCell(c), "", evaluator));
 				}
 			}
 		}
@@ -102,7 +105,7 @@ public class Sheet implements Iterable<Object[]> {
 				if(curRow == null) vector.add("");
 				else {
 					Cell cell = curRow.getCell(no);
-					vector.add(Utils.getCellValue(cell, ""));
+					vector.add(Utils.getCellValue(cell, "", evaluator));
 				}
 			}
 			return vector.toArray();
@@ -129,7 +132,7 @@ public class Sheet implements Iterable<Object[]> {
 			if(curRow != null) {
 				for(int j=0; j<= curRow.getLastCellNum(); j++) {
 					Cell cell = curRow.getCell(j);
-					vector.add(Utils.getCellValue(cell, ""));
+					vector.add(Utils.getCellValue(cell, "", evaluator));
 				}
 			}
 			return vector.toArray();
