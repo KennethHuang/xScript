@@ -1,10 +1,9 @@
 package kenh.xscript.io;
 
-import java.text.SimpleDateFormat;
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
+
+import java.util.Map;
 
 public class Utils {
 	
@@ -148,13 +147,18 @@ public class Utils {
 	 * @return
 	 */
 	private static DataFormatter dataFormatter = new DataFormatter();
-	public static Object getCellValue(Cell cell) {
-		return getCellValue(cell, null, false);
+	public static Object getCellValue(Cell cell, FormulaEvaluator evaluator) {
+		return getCellValue(cell, null, evaluator);
 	}
-	public static Object getCellValue(Cell cell, Object nullValue) {
-		return getCellValue(cell, null, false);
+	public static Object getCellValue(Cell cell, Object nullValue, FormulaEvaluator evaluator) {
+		String value = System.getProperty("XSCRIPT.NUMERIC");
+		if(StringUtils.equalsAnyIgnoreCase(value, "Y", "yes")) {
+			return getCellValue(cell, null, true, evaluator);
+		} else {
+			return getCellValue(cell, null, false, evaluator);
+		}
 	}
-	public static Object getCellValue(Cell cell, Object nullValue, boolean numeric) {
+	public static Object getCellValue(Cell cell, Object nullValue, boolean numeric, FormulaEvaluator evaluator) {
 		if(cell == null) return nullValue;
 		if(cell.getCellType() == CellType.BOOLEAN) {
 			if(cell.getBooleanCellValue()) return "true";
@@ -167,6 +171,23 @@ public class Utils {
 				return cell.getNumericCellValue();
 			} else {
 				return dataFormatter.formatCellValue(cell);
+			}
+		}
+		if (cell.getCellType() == CellType.FORMULA) {
+			if(evaluator == null) return cell.getCellFormula();
+			switch (evaluator.evaluateFormulaCell(cell)) {
+				case BOOLEAN:
+					return cell.getBooleanCellValue();
+				case NUMERIC:
+					if(DateUtil.isCellDateFormatted(cell)) {
+						return cell.getDateCellValue();
+					} else if(numeric) {
+						return cell.getNumericCellValue();
+					} else {
+						return dataFormatter.formatCellValue(cell);
+					}
+				case STRING:
+					return cell.getStringCellValue();
 			}
 		}
 		return cell.getStringCellValue();
