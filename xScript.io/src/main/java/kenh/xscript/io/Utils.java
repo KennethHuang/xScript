@@ -141,17 +141,19 @@ public class Utils {
 		return cell;
 	}
 
+	private static DataFormatter dataFormatter = new DataFormatter();
+	private static String KEY_EXCEL_NUMERIC = "XSCRIPT.NUMERIC";
+	private static String KEY_EXCEL_SKIP_LF = "XSCRIPT.SKIPLF";
 	/**
 	 * get the value of cell
 	 * @param cell
 	 * @return
 	 */
-	private static DataFormatter dataFormatter = new DataFormatter();
 	public static Object getCellValue(Cell cell, FormulaEvaluator evaluator) {
 		return getCellValue(cell, null, evaluator);
 	}
 	public static Object getCellValue(Cell cell, Object nullValue, FormulaEvaluator evaluator) {
-		String value = System.getProperty("XSCRIPT.NUMERIC");
+		String value = System.getProperty(KEY_EXCEL_NUMERIC);
 		if(StringUtils.equalsAnyIgnoreCase(value, "Y", "yes")) {
 			return getCellValue(cell, null, true, evaluator);
 		} else {
@@ -187,10 +189,19 @@ public class Utils {
 						return dataFormatter.formatCellValue(cell);
 					}
 				case STRING:
-					return cell.getStringCellValue();
+					return getStringValueWithLRCheck(cell.getStringCellValue());
 			}
 		}
-		return cell.getStringCellValue();
-	};
+		return getStringValueWithLRCheck(cell.getStringCellValue());
+	}
+
+	public static String getStringValueWithLRCheck(String str) {
+		String value = System.getProperty(KEY_EXCEL_SKIP_LF);
+		if(StringUtils.equalsAnyIgnoreCase(value, "Y", "yes")) {
+			return StringUtils.replaceChars(str, "\r\n", "");
+		} else {
+			return str;
+		}
+	}
 
 }
