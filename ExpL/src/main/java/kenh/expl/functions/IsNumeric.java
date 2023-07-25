@@ -36,5 +36,8 @@ public class IsNumeric extends BaseFunction {
 	public boolean process(String cs) {
 		return StringUtils.isNumeric(cs);
 	}
-	
+
+	public boolean process() {
+		return false;
+	}
 }
