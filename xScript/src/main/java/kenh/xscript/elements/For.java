@@ -106,7 +106,7 @@ public class For extends NormalElement {
 		} else if(ref instanceof Iterable) {
 			iterable = (Iterable)ref;
 		} else {
-			throw new UnsupportedScriptException(this, "Can only iterate over an array or an instance of java.lang.Iterable.");
+			iterable = convertToList(new Object[]{ref});
 		}
 		
 		if(iterable == null) {
