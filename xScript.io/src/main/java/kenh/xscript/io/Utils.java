@@ -144,6 +144,7 @@ public class Utils {
 	private static DataFormatter dataFormatter = new DataFormatter();
 	private static String KEY_EXCEL_NUMERIC = "XSCRIPT.NUMERIC";
 	private static String KEY_EXCEL_SKIP_LF = "XSCRIPT.SKIPLF";
+	private static String KEY_EXCEL_FORMULA_ERROR = "XSCRIPT.FORMULA.ERROR";
 	/**
 	 * get the value of cell
 	 * @param cell
@@ -186,10 +187,13 @@ public class Utils {
 					} else if(numeric) {
 						return cell.getNumericCellValue();
 					} else {
-						return dataFormatter.formatCellValue(cell);
+						return dataFormatter.formatCellValue(cell, evaluator);
 					}
 				case STRING:
 					return getStringValueWithLRCheck(cell.getStringCellValue());
+				case ERROR:
+					String value = System.getProperty(KEY_EXCEL_FORMULA_ERROR);
+					return StringUtils.trimToEmpty(value);
 			}
 		}
 		return getStringValueWithLRCheck(cell.getStringCellValue());
